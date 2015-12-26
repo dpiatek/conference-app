@@ -1,3 +1,5 @@
+import findIndex from 'lodash/array/findIndex';
+
 export function conference(state, action) {
   switch (action.type) {
     case "ADD_CONF":
@@ -22,6 +24,13 @@ export function conferences(state = [], action) {
       return [
         ...state,
         conference(void 0, action)
+      ]
+    case "DELETE_CONF":
+      const index = findIndex(state, c => c.id === action.id);
+
+      return [
+        ...state.slice(0, index),
+        ...state.slice(index + 1)
       ]
     default:
       return state;

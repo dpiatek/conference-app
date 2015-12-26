@@ -10,7 +10,9 @@
   },
   "author": "Dominik Piatek <do.piatek@gmail.com> (http://dominikpiatek.com)",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "lodash": "^3.10.1"
+  },
   "devDependencies": {
     "babel-core": "^6.3.26",
     "babel-loader": "^6.2.0",
