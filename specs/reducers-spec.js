@@ -2,7 +2,7 @@ import expect from 'expect';
 import deepFreeze from 'deep-freeze';
 import {conference, conferences} from '../src/reducers';
 
-describe('reducers', function () {
+describe('conference reducer', function () {
   it('new conference', function () {
     const action = {
       type: "ADD_CONF",
@@ -46,7 +46,7 @@ describe('reducers', function () {
   });
 });
 
-describe('conferences', function () {
+describe('conferences reducer', function () {
   it('add a new conference', function () {
     const action = { type: "ADD_CONF", conf: { id: 0 } };
     deepFreeze(action);
