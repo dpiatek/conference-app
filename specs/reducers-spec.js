@@ -1,6 +1,6 @@
 import expect from 'expect';
 import deepFreeze from 'deep-freeze';
-import {conference, conferences} from '../src/reducers';
+import {conference, conferences, user} from '../src/reducers';
 
 describe('conference reducer', function () {
   it('new conference', function () {
