@@ -1,18 +1,22 @@
 import findIndex from 'lodash/array/findIndex';
+import find from 'lodash/collection/find';
+import assign from 'lodash/object/assign';
 
 export function conference(state, action) {
   switch (action.type) {
     case "ADD_CONF":
       return {
-        id: action.id,
-        name: action.name,
-        topic: action.topic,
-        website: action.website,
-        dateFrom: action.dateFrom,
-        dateTo: action.dateTo,
+        id: action.conf.id,
+        name: action.conf.name,
+        topic: action.conf.topic,
+        website: action.conf.website,
+        dateFrom: action.conf.dateFrom,
+        dateTo: action.conf.dateTo,
         peopleGoing: [],
         peopleInterested: []
       }
+    case "EDIT_CONF":
+      return assign({}, state, action.conf);
     default:
       return state;
   }
@@ -25,12 +29,20 @@ export function conferences(state = [], action) {
         ...state,
         conference(void 0, action)
       ]
-    case "DELETE_CONF":
-      const index = findIndex(state, c => c.id === action.id);
+    case "EDIT_CONF":
+      const editIndex = findIndex(state, c => c.id === action.conf.id);
 
       return [
-        ...state.slice(0, index),
-        ...state.slice(index + 1)
+        ...state.slice(0, editIndex),
+        conference(state[editIndex], action),
+        ...state.slice(editIndex + 1)
+      ]
+    case "DELETE_CONF":
+      const delIndex = findIndex(state, c => c.id === action.conf.id);
+
+      return [
+        ...state.slice(0, delIndex),
+        ...state.slice(delIndex + 1)
       ]
     default:
       return state;
