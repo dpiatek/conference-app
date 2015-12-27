@@ -1,43 +1,15 @@
 import React from 'react';
 import User from './user';
 import ConfList from './conf-list';
+import ConfForm from './conf-form';
 import { connect } from 'react-redux';
 
-const App = ({ user, conferences }) => {
+const App = ({ dispatch, user, conferences }) => {
   return (
     <div>
       <User userData={user} confsData={conferences} />
       <ConfList confsData={conferences} />
-
-      <div>
-        <div>Add/Edit conf</div>
-        <form>
-          <label>
-            Name
-            <input type="text" id="conf-name" />
-          </label>
-
-          <label>
-            Topic
-            <input type="text" id="conf-date-to" />
-          </label>
-
-          <label>
-            Website
-            <input type="text" id="conf-link" />
-          </label>
-
-          <label>
-            Date From
-            <input type="date" id="conf-date-from" />
-          </label>
-
-          <label>
-            Date To
-            <input type="date" id="conf-date-to" />
-          </label>
-        </form>
-      </div>
+      <ConfForm dispatch={dispatch} />
     </div>
   );
 }

@@ -3,8 +3,12 @@ import User from '../src/components/user';
 import UserConfList from '../src/components/user-conf-list';
 import Conf from '../src/components/conf';
 import ConfList from '../src/components/conf-list';
+import ConfForm from '../src/components/conf-form';
 import ReactDOMServer from 'react-dom/server';
+import ReactDOM, { findDOMNode as findNode } from 'react-dom';
 import React from 'react';
+import { createStore } from 'redux';
+import TestUtils, { renderIntoDocument, scryRenderedDOMComponentsWithTag as scryTag } from 'react-addons-test-utils';
 
 describe('User', function() {
   it('renders correctly', function() {
@@ -61,5 +65,43 @@ describe('ConfList', function() {
     expect(string)
       .toInclude("BestConf")
       .toInclude("EvenBetterConf");
+  });
+});
+
+describe('ConfForm', function () {
+  it('handles changes on a field', function () {
+    const instance = renderIntoDocument(<ConfForm />);
+    const input = scryTag(instance, 'input')[0];
+    const node = findNode(input);
+    node.value = "Alice";
+    TestUtils.Simulate.change(node);
+    expect(instance.state.name).toEqual("Alice");
+  });
+
+  it('does not submit an invalid conf', function () {
+    const spy = expect.createSpy();
+    const instance = renderIntoDocument(<ConfForm dispatch={spy} />);
+    const form = findNode(instance);
+    TestUtils.Simulate.submit(form);
+    expect(spy).toNotHaveBeenCalled();
+  });
+
+  it('submits a valid form', function () {
+    const spy = expect.createSpy();
+    const instance = renderIntoDocument(<ConfForm dispatch={spy} />);
+
+    const nameInput = scryTag(instance, 'input')[0];
+    const nameNode = findNode(nameInput);
+    nameNode.value = "Alice";
+    TestUtils.Simulate.change(nameNode);
+
+    const websiteInput = scryTag(instance, 'input')[1];
+    const websiteNode = findNode(websiteInput);
+    websiteNode.value = "http://best.conf";
+    TestUtils.Simulate.change(websiteNode);
+
+    const form = findNode(instance);
+    TestUtils.Simulate.submit(form);
+    expect(spy).toHaveBeenCalled();
   });
 });
