@@ -1,3 +1,5 @@
+var webpack = require('webpack');
+
 module.exports = {
   devtool: "source-map",
   entry: "./src/index.js",
@@ -13,5 +15,12 @@ module.exports = {
         loader: "babel-loader?presets[]=es2015"
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      "process.env": {
+        NODE_ENV: JSON.stringify("development")
+      }
+    })
+  ]
 };

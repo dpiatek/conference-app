@@ -1,9 +1,12 @@
 import { conferences, user } from './reducers';
-import { createStore, combineReducers } from 'redux';
+import { createStore as _createStore, combineReducers } from 'redux';
+import DevTools from './dev-tools';
 import App from './components/app';
 import { Provider } from 'react-redux';
 import { render } from 'react-dom';
 import React from 'react';
+
+const createStore = DevTools.instrument()(_createStore);
 
 let store = createStore(combineReducers({
   conferences,
@@ -26,11 +29,21 @@ let store = createStore(combineReducers({
   }
 });
 
-render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('app')
-)
-
-window.store = store;
+if (process.env.NODE_ENV === 'production') {
+  render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    document.getElementById('app')
+  )
+} else {
+  render(
+    <Provider store={store}>
+      <div>
+        <App />
+        <DevTools />
+      </div>
+    </Provider>,
+    document.getElementById('app')
+  )
+}
