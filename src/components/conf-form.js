@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { addConf } from '../actions';
 
 class ConfForm extends Component {
   constructor() {
@@ -20,19 +21,13 @@ class ConfForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const { name, topic, website, dateFrom, dateTo } = this.state;
+    const { name, website } = this.state;
 
     if (!name || !website) {
       return;
     }
 
-    this.props.dispatch({
-      type: "ADD_CONF",
-      conf: {
-        id: name + Date.now() + dateFrom,
-        name, topic, website, dateFrom, dateTo
-      }
-    });
+    this.props.dispatch(addConf(this.state));
   }
 
   render() {

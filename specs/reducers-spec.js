@@ -1,11 +1,20 @@
 import expect from 'expect';
 import deepFreeze from 'deep-freeze';
-import {conference, conferences, user} from '../src/reducers';
+import { conference, conferences, user } from '../src/reducers';
+import {
+  ADD_CONF,
+  EDIT_CONF,
+  DELETE_CONF,
+  GO_TO_CONF,
+  DONT_GO_CONF,
+  INTERESTED_IN_CONF,
+  NOT_INTERESTED_IN_CONF
+} from '../src/actions';
 
 describe('conference reducer', function () {
   it('new conference', function () {
     const action = {
-      type: "ADD_CONF",
+      type: ADD_CONF,
       conf: {
         id: 0,
         name: "JSConfBP",
@@ -32,7 +41,7 @@ describe('conference reducer', function () {
   it('edit a conference', function () {
     const state = { id: 0, name: "A" };
     const action = {
-      type: "EDIT_CONF",
+      type: EDIT_CONF,
       conf: {
         id: 0,
         name: "B"
@@ -48,20 +57,20 @@ describe('conference reducer', function () {
 
 describe('conferences reducer', function () {
   it('add a new conference', function () {
-    const action = { type: "ADD_CONF", conf: { id: 0 } };
+    const action = { type: ADD_CONF, conf: { id: 0 } };
     deepFreeze(action);
     expect(conferences(void 0, action).length).toEqual(1);
   });
 
   it('remove a conference', function () {
-    const action = { type: "DELETE_CONF", conf: { id: 0 } };
+    const action = { type: DELETE_CONF, conf: { id: 0 } };
     const state = [{ id: 0 }];
     deepFreeze(action);
     expect(conferences(state, action).length).toEqual(0);
   });
 
   it('edit a conference', function () {
-    const action = { type: "EDIT_CONF", conf: { id: 0, name: "B" } };
+    const action = { type: EDIT_CONF, conf: { id: 0, name: "B" } };
     const state = [{ id: 0, name: "A" }];
     deepFreeze(state);
     expect(conferences(state, action)[0].name).toEqual("B");
@@ -70,7 +79,7 @@ describe('conferences reducer', function () {
 
 describe('user reducer', function () {
   it('go to conference', function () {
-    const action = { type: "GO_TO_CONF", confId: 0 };
+    const action = { type: GO_TO_CONF, confId: 0 };
     const state = { goingToConfs: [], interestedInConfs: [] };
     deepFreeze(state);
     expect(user(state, action)).toEqual({
@@ -80,7 +89,7 @@ describe('user reducer', function () {
   });
 
   it('don\' go to conference', function () {
-    const action = { type: "DONT_GO_CONF", confId: 0 };
+    const action = { type: DONT_GO_CONF, confId: 0 };
     const state = { goingToConfs: [0], interestedInConfs: [] };
     deepFreeze(state);
     expect(user(state, action)).toEqual({
@@ -90,7 +99,7 @@ describe('user reducer', function () {
   });
 
   it('interested in conference', function () {
-    const action = { type: "INTERESTED_IN_CONF", confId: 0 };
+    const action = { type: INTERESTED_IN_CONF, confId: 0 };
     const state = { goingToConfs: [], interestedInConfs: [] };
     deepFreeze(state);
     expect(user(state, action)).toEqual({
@@ -100,7 +109,7 @@ describe('user reducer', function () {
   });
 
   it('not interested in conference', function () {
-    const action = { type: "NOT_INTERESTED_IN_CONF", confId: 0 };
+    const action = { type: NOT_INTERESTED_IN_CONF, confId: 0 };
     const state = { goingToConfs: [], interestedInConfs: [0] };
     deepFreeze(state);
     expect(user(state, action)).toEqual({

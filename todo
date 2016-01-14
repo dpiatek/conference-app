@@ -1,5 +1,4 @@
 - tests
-- babel
 - hot reload
 - css modules
 - react dnd
@@ -7,4 +6,4 @@
 - connect to firebase
 - host on github?
 - linting
-
+- circleci int?
