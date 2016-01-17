@@ -25,9 +25,7 @@ let store = createStore(combineReducers({
     }
   ],
   user: {
-    name: "Dominik",
-    goingToConfs: [],
-    interestedInConfs: []
+    name: "Dominik"
   }
 });
 

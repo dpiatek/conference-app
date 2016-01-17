@@ -1,24 +1,13 @@
 import React, { Component } from 'react';
-import { goToConf, interestedInConf, editConf } from '../actions';
+import { goToConf, interestedInConf } from '../actions';
 
 class Conf extends Component {
   handleAttend() {
-    const { conf } = this.props;
-    [
-      goToConf(conf.id),
-      editConf(conf.id, {
-        peopleGoing: conf.peopleGoing.concat(["Dominik"]),
-        peopleInterested: conf.peopleInterested.filter(person => person !== "Dominik")
-      })
-    ].forEach(action => this.props.dispatch(action));
+    this.props.dispatch(goToConf(this.props.conf, "Dominik"));
   }
 
   handleInterest() {
-    const { conf } = this.props;
-    [
-      interestedInConf(conf.id),
-      editConf(conf.id, { "peopleInterested": conf.peopleInterested.concat(["Dominik"]) })
-    ].forEach(action => this.props.dispatch(action));
+    this.props.dispatch(interestedInConf(this.props.conf, "Dominik"));
   }
 
   renderAttendance(attending) {

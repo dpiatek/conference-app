@@ -1,21 +1,20 @@
 import React from 'react';
 import UserConfList from './user-conf-list';
+import includes from 'lodash/collection/includes';
 
 const User = ({ userData, confsData }) => {
-  const {
-    name,
-    goingToConfs: goingToConfs = [],
-    interestedInConfs: interestedInConfs = []
-  } = userData;
+  const { name } = userData;
 
   return (
     <div>
       <p>User: {name}</p>
       <div>Confs you are going to:</div>
-      <UserConfList confs={goingToConfs} confsData={confsData} />
+      <UserConfList
+        confs={confsData.filter(conf => includes(conf.peopleGoing, name))} />
 
       <div>Maybe also:</div>
-      <UserConfList confs={interestedInConfs} confsData={confsData} />
+      <UserConfList
+        confs={confsData.filter(conf => includes(conf.peopleInterested, name))} />
     </div>
   );
 }

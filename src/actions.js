@@ -27,16 +27,23 @@ export function editConf(confId, data) {
   }
 }
 
-export function goToConf(confId) {
+export function goToConf(conf, currentUsername) {
   return {
-    type: GO_TO_CONF,
-    confId: confId
-  };
+    type: EDIT_CONF,
+    conf: {
+      id: conf.id,
+      peopleGoing: conf.peopleGoing.concat([currentUsername]),
+      peopleInterested: conf.peopleInterested.filter(username => username !== currentUsername)
+    }
+  }
 }
 
-export function interestedInConf(confId) {
+export function interestedInConf(conf, currentUsername) {
   return {
-    type: INTERESTED_IN_CONF,
-    confId: confId
-  };
+    type: EDIT_CONF,
+    conf: {
+      id: conf.id,
+      peopleInterested: conf.peopleInterested.concat([currentUsername])
+    }
+  }
 }

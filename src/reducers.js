@@ -11,7 +11,7 @@ import {
   NOT_INTERESTED_IN_CONF
 } from './actions';
 
-export function conference(state, action) {
+export function conference(state = {}, action) {
   switch (action.type) {
     case ADD_CONF:
       return {
@@ -58,39 +58,6 @@ export function conferences(state = [], action) {
   }
 }
 
-export function user(state = { goingToConfs: [], interestedInConfs: [] }, action) {
-  let confID, delIndex;
-
-  switch (action.type) {
-    case GO_TO_CONF:
-      confID = action.confId;
-      let newState = assign({}, state, {
-        goingToConfs: state.goingToConfs.concat([action.confId])
-      });
-
-      return user(newState, { type: NOT_INTERESTED_IN_CONF, confId: confID })
-    case DONT_GO_CONF:
-      delIndex = findIndex(state.goingToConfs, id => id === action.confId);
-      return assign({}, state, {
-        goingToConfs: [
-          ...state.goingToConfs.slice(0, delIndex),
-          ...state.goingToConfs.slice(delIndex + 1)
-        ]
-      });
-    case INTERESTED_IN_CONF:
-      confID = action.confId;
-      return assign({}, state, {
-        interestedInConfs: state.interestedInConfs.concat([action.confId])
-      });
-    case NOT_INTERESTED_IN_CONF:
-      delIndex = findIndex(state.interestedInConfs, id => id === action.confId);
-      return assign({}, state, {
-        interestedInConfs: [
-          ...state.interestedInConfs.slice(0, delIndex),
-          ...state.interestedInConfs.slice(delIndex + 1)
-        ]
-      });
-    default:
-      return state;
-  }
+export function user(state = {}, action) {
+  return state;
 }

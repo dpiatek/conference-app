@@ -23,10 +23,9 @@ describe('User', function() {
 
 describe('UserConfList', function() {
   it('renders correctly', function() {
-    const confs = [0];
-    const confsData = [{ id: 0, name: "BestConf" }];
+    const confs = [{ id: 0, name: "BestConf" }];
     const string = ReactDOMServer.renderToString(
-      <UserConfList confs={confs} confsData={confsData} />
+      <UserConfList confs={confs} />
     );
     expect(string).toInclude("BestConf");
   });
@@ -78,13 +77,10 @@ describe('Conf', function() {
 describe('ConfList', function() {
   it('renders correctly', function() {
     const confsData = [
-      { id: 0, name: "BestConf", peopleGoing: [], peopleInterested: [] },
+      { id: 0, name: "BestConf", peopleGoing: ["Bob"], peopleInterested: [] },
       { id: 1, name: "EvenBetterConf", peopleGoing: [], peopleInterested: [] }
     ];
-    const userData = {
-      goingToConfs: [0],
-      interestedInConfs: []
-    }
+    const userData = { name: "Bob" };
     const string = ReactDOMServer.renderToString(
       <ConfList confsData={confsData} userData={userData} />
     );

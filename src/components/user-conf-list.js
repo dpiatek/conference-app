@@ -1,13 +1,11 @@
 import React from 'react';
 import find from 'lodash/collection/find';
 
-const UserConfList = ({ confs, confsData }) =>
+const UserConfList = ({ confs }) =>
   <ul>
-    {confs.map(id => {
-      const conf = find(confsData, c => c.id === id);
-
+    {confs.map(conf => {
       return (
-        <li key={id}>
+        <li key={conf.id}>
           <a href="">{conf.name}</a> <button>-</button>
         </li>
       );
