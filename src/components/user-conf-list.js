@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import find from 'lodash/collection/find';
+import includes from 'lodash/collection/includes';
 
-export default class UserConfList extends Component {
+export class UserConfList extends Component {
   clickHandler(conf) {
     const { cancelCallback, name } = this.props;
     this.props.dispatch(cancelCallback(conf, name));
@@ -24,3 +26,14 @@ export default class UserConfList extends Component {
     );
   }
 }
+
+export function userConfListSelector(state, props, dispatch) {
+  const { user: { name }, conferences } = state;
+
+  return {
+    name, dispatch,
+    confs: conferences.filter(c => includes(c[props.group], name))
+  };
+}
+
+export default connect(userConfListSelector)(UserConfList);

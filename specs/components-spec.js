@@ -1,6 +1,6 @@
 import expect from 'expect';
 import User from '../src/components/user';
-import UserConfList from '../src/components/user-conf-list';
+import { UserConfList, userConfListSelector } from '../src/components/user-conf-list';
 import Conf from '../src/components/conf';
 import ConfList from '../src/components/conf-list';
 import ConfForm from '../src/components/conf-form';
@@ -11,16 +11,6 @@ import { createStore } from 'redux';
 import TestUtils, { renderIntoDocument, scryRenderedDOMComponentsWithTag as scryTag } from 'react-addons-test-utils';
 import { GO_TO_CONF, INTERESTED_IN_CONF } from '../src/actions';
 
-describe('User', function() {
-  it('renders correctly', function() {
-    const user = { name: "Bob" };
-    const confsData = [{ id: 0, name: "BestConf" }];
-    const string = ReactDOMServer.renderToString(
-      <User userData={user} confsData={confsData} />);
-    expect(string).toInclude("Bob");
-  });
-});
-
 describe('UserConfList', function() {
   it('renders correctly', function() {
     const confs = [{ id: 0, name: "BestConf" }];
@@ -28,6 +18,19 @@ describe('UserConfList', function() {
       <UserConfList confs={confs} />
     );
     expect(string).toInclude("BestConf");
+  });
+
+  it('transforms props correctly', function () {
+    const dispatch = function(){};
+    const state = {
+      conferences: [{ id: 0, name: "BestConf" }],
+      user: { name: "Jake" }
+    };
+    const props = { group: "peopleGoing" };
+    const result = userConfListSelector(state, props, dispatch);
+    expect(result).toEqual({
+      dispatch, name: state.user.name, confs: []
+    });
   });
 });
 

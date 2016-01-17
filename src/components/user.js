@@ -3,25 +3,19 @@ import UserConfList from './user-conf-list';
 import includes from 'lodash/collection/includes';
 import { cancelGoToConf, cancelInterestedInConf } from '../actions';
 
-const User = ({ userData, confsData, dispatch }) => {
-  const { name } = userData;
-
+const User = ({ username }) => {
   return (
     <div>
-      <p>User: {name}</p>
+      <p>User: {username}</p>
       <div>Confs you are going to:</div>
       <UserConfList
-        dispatch={dispatch}
-        name={name}
         cancelCallback={cancelGoToConf}
-        confs={confsData.filter(conf => includes(conf.peopleGoing, name))} />
+        group={"peopleGoing"} />
 
       <div>Maybe also:</div>
       <UserConfList
-        dispatch={dispatch}
-        name={name}
         cancelCallback={cancelInterestedInConf}
-        confs={confsData.filter(conf => includes(conf.peopleInterested, name))} />
+        group={"peopleInterested"} />
     </div>
   );
 }
