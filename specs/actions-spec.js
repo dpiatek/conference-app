@@ -1,6 +1,11 @@
 import expect from 'expect';
 import deepFreeze from 'deep-freeze';
-import { goToConf, interestedInConf } from '../src/actions';
+import {
+  goToConf,
+  interestedInConf,
+  cancelGoToConf,
+  cancelInterestedInConf
+} from '../src/actions';
 
 describe('actions', function () {
   const conf = ({ peopleGoing = [], peopleInterested = [] }) => {
@@ -32,6 +37,14 @@ describe('actions', function () {
         peopleInterested: []
       });
     });
+
+    it('removes the user from people going', function () {
+      const result = cancelGoToConf(conf({ peopleGoing: ["Bob"] }), "Bob");
+      expect(result.conf).toEqual({
+        id: 0,
+        peopleGoing: []
+      });
+    });
   });
 
   describe('interested in conference', function () {
@@ -40,6 +53,17 @@ describe('actions', function () {
       expect(result.conf).toEqual({
         id: 0,
         peopleInterested: ["Bob"]
+      });
+    });
+
+    it('removes the user from people interested', function () {
+      const result = cancelInterestedInConf(
+        conf({ peopleInterested: ["Bob"] }),
+        "Bob"
+      );
+      expect(result.conf).toEqual({
+        id: 0,
+        peopleInterested: []
       });
     });
   });

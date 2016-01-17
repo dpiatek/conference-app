@@ -38,12 +38,32 @@ export function goToConf(conf, currentUsername) {
   }
 }
 
+export function cancelGoToConf(conf, currentUsername) {
+  return {
+    type: EDIT_CONF,
+    conf: {
+      id: conf.id,
+      peopleGoing: conf.peopleGoing.filter(username => username !== currentUsername)
+    }
+  }
+}
+
 export function interestedInConf(conf, currentUsername) {
   return {
     type: EDIT_CONF,
     conf: {
       id: conf.id,
       peopleInterested: conf.peopleInterested.concat([currentUsername])
+    }
+  }
+}
+
+export function cancelInterestedInConf(conf, currentUsername) {
+  return {
+    type: EDIT_CONF,
+    conf: {
+      id: conf.id,
+      peopleInterested: conf.peopleInterested.filter(username => username !== currentUsername)
     }
   }
 }

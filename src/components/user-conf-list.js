@@ -1,15 +1,26 @@
-import React from 'react';
+import React, { Component } from 'react';
 import find from 'lodash/collection/find';
 
-const UserConfList = ({ confs }) =>
-  <ul>
-    {confs.map(conf => {
-      return (
-        <li key={conf.id}>
-          <a href="">{conf.name}</a> <button>-</button>
-        </li>
-      );
-    })}
-  </ul>
+export default class UserConfList extends Component {
+  clickHandler(conf) {
+    const { cancelCallback, name } = this.props;
+    this.props.dispatch(cancelCallback(conf, name));
+  }
 
-export default UserConfList;
+  render() {
+    const { confs } = this.props;
+
+    return (
+      <ul>
+        {confs.map(conf => {
+          return (
+            <li key={conf.id}>
+              <a href="">{conf.name}</a>
+              <button onClick={this.clickHandler.bind(this, conf)}>-</button>
+            </li>
+          );
+        })}
+      </ul>
+    );
+  }
+}
