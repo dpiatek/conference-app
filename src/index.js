@@ -19,7 +19,9 @@ let store = createStore(combineReducers({
       topic: "Javascript",
       website: "http://best.conf",
       dateFrom: 1463007600000,
-      dateTo: 1463094000000
+      dateTo: 1463094000000,
+      peopleGoing: ["Kate"],
+      peopleInterested: ["John", "Mary"]
     }
   ],
   user: {

@@ -8,7 +8,7 @@ const App = ({ dispatch, user, conferences }) => {
   return (
     <div>
       <User userData={user} confsData={conferences} />
-      <ConfList confsData={conferences} />
+      <ConfList userData={user} confsData={conferences} dispatch={dispatch} />
       <ConfForm dispatch={dispatch} />
     </div>
   );

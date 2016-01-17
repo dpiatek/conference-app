@@ -9,6 +9,7 @@ import ReactDOM, { findDOMNode as findNode } from 'react-dom';
 import React from 'react';
 import { createStore } from 'redux';
 import TestUtils, { renderIntoDocument, scryRenderedDOMComponentsWithTag as scryTag } from 'react-addons-test-utils';
+import { GO_TO_CONF, INTERESTED_IN_CONF } from '../src/actions';
 
 describe('User', function() {
   it('renders correctly', function() {
@@ -32,15 +33,18 @@ describe('UserConfList', function() {
 });
 
 describe('Conf', function() {
+  const conf = Object.freeze({
+    id: 0,
+    name: "BestConf",
+    topic: "Javascript",
+    website: "http://best.conf",
+    dateFrom: 1463007600000,
+    dateTo: 1463094000000,
+    peopleGoing: ["Jake"],
+    peopleInterested: []
+  });
+
   it('renders correctly', function() {
-    const conf = {
-      id: 0,
-      name: "BestConf",
-      topic: "Javascript",
-      website: "http://best.conf",
-      dateFrom: 1463007600000,
-      dateTo: 1463094000000,
-    };
     const string = ReactDOMServer.renderToString(
       <Conf conf={conf} />
     );
@@ -49,22 +53,46 @@ describe('Conf', function() {
       .toInclude("Javascript")
       .toInclude("http://best.conf")
       .toInclude("1463007600000")
-      .toInclude("1463094000000");
+      .toInclude("1463094000000")
+      .toInclude("Jake");
+  });
+
+  it('renders correctly attendance', function() {
+    const string = ReactDOMServer.renderToString(
+      <Conf conf={conf} attending={true} />
+    );
+    expect(string).toInclude("You are attending this event");
+    expect(string).toExclude("I&#x27;m going");
+    expect(string).toExclude("This looks interesting!");
+  });
+
+  it('renders correctly interest', function() {
+    const string = ReactDOMServer.renderToString(
+      <Conf conf={conf} interested={true} />
+    );
+    expect(string).toInclude("You are interested in this event");
+    expect(string).toExclude("This looks interesting!");
   });
 });
 
 describe('ConfList', function() {
   it('renders correctly', function() {
     const confsData = [
-      { id: 0, name: "BestConf" },
-      { id: 1, name: "EvenBetterConf" }
+      { id: 0, name: "BestConf", peopleGoing: [], peopleInterested: [] },
+      { id: 1, name: "EvenBetterConf", peopleGoing: [], peopleInterested: [] }
     ];
+    const userData = {
+      goingToConfs: [0],
+      interestedInConfs: []
+    }
     const string = ReactDOMServer.renderToString(
-      <ConfList confsData={confsData} />
+      <ConfList confsData={confsData} userData={userData} />
     );
     expect(string)
       .toInclude("BestConf")
-      .toInclude("EvenBetterConf");
+      .toInclude("EvenBetterConf")
+      .toInclude("You are attending this event")
+      .toInclude("This looks interesting!");
   });
 });
 

@@ -64,9 +64,11 @@ export function user(state = { goingToConfs: [], interestedInConfs: [] }, action
   switch (action.type) {
     case GO_TO_CONF:
       confID = action.confId;
-      return assign({}, state, {
+      let newState = assign({}, state, {
         goingToConfs: state.goingToConfs.concat([action.confId])
       });
+
+      return user(newState, { type: NOT_INTERESTED_IN_CONF, confId: confID })
     case DONT_GO_CONF:
       delIndex = findIndex(state.goingToConfs, id => id === action.confId);
       return assign({}, state, {

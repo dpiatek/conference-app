@@ -88,6 +88,16 @@ describe('user reducer', function () {
     });
   });
 
+  it('go to conference previously interested in', function () {
+    const action = { type: GO_TO_CONF, confId: 0 };
+    const state = { goingToConfs: [], interestedInConfs: [0] };
+    deepFreeze(state);
+    expect(user(state, action)).toEqual({
+      goingToConfs: [0],
+      interestedInConfs: []
+    });
+  });
+
   it('don\' go to conference', function () {
     const action = { type: DONT_GO_CONF, confId: 0 };
     const state = { goingToConfs: [0], interestedInConfs: [] };
