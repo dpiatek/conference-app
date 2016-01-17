@@ -8,3 +8,5 @@
 - linting
 - circleci int?
 - sourcemaps
+- calendar
+- propTypes
