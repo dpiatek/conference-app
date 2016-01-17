@@ -6,16 +6,19 @@ class Conf extends Component {
     const { conf } = this.props;
     [
       goToConf(conf.id),
-      editConf(conf, "peopleGoing", "Dominik")
-    ].forEach(action => this.props.dispatch(action))
+      editConf(conf.id, {
+        peopleGoing: conf.peopleGoing.concat(["Dominik"]),
+        peopleInterested: conf.peopleInterested.filter(person => person !== "Dominik")
+      })
+    ].forEach(action => this.props.dispatch(action));
   }
 
   handleInterest() {
     const { conf } = this.props;
-    this.props.dispatch(interestedInConf(conf.id));
-    this.props.dispatch(
-      editConf(conf, "peopleInterested", "Dominik")
-    );
+    [
+      interestedInConf(conf.id),
+      editConf(conf.id, { "peopleInterested": conf.peopleInterested.concat(["Dominik"]) })
+    ].forEach(action => this.props.dispatch(action));
   }
 
   renderAttendance(attending) {

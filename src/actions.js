@@ -6,6 +6,8 @@ export const DONT_GO_CONF = "DONT_GO_CONF";
 export const INTERESTED_IN_CONF = "INTERESTED_IN_CONF";
 export const NOT_INTERESTED_IN_CONF = "NOT_INTERESTED_IN_CONF";
 
+import assign from 'lodash/object/assign';
+
 export function addConf(data) {
   const { name, dateFrom } = data;
 
@@ -18,13 +20,10 @@ export function addConf(data) {
   }
 }
 
-export function editConf(conf, group, username) {
+export function editConf(confId, data) {
   return {
     type: EDIT_CONF,
-    conf: {
-      id: conf.id,
-      [group]: conf[group].concat([username])
-    }
+    conf: assign({ id: confId, }, data)
   }
 }
 
@@ -41,4 +40,3 @@ export function interestedInConf(confId) {
     confId: confId
   };
 }
-
