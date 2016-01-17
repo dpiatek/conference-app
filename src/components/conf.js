@@ -1,43 +1,38 @@
 import React, { Component } from 'react';
 import { goToConf, interestedInConf } from '../actions';
+import ConfButton from './conf-button';
 
 class Conf extends Component {
   handleAttend() {
-    this.props.dispatch(goToConf(this.props.conf, "Dominik"));
+    this.props.dispatch(
+      goToConf(this.props.conf, this.props.username)
+    );
   }
 
   handleInterest() {
-    this.props.dispatch(interestedInConf(this.props.conf, "Dominik"));
+    this.props.dispatch(
+      interestedInConf(this.props.conf, this.props.username)
+    );
   }
 
   renderAttendance(attending) {
-    const handleAttend = this.handleAttend.bind(this);
-
-    if (attending) {
-      return <span>You are attending this event</span>;
-    } else {
-      return (
-        <button
-          type="button"
-          disabled={attending}
-          onClick={handleAttend}>I'm going!</button>
-      );
-    }
+    return (
+      <ConfButton
+        callback={this.handleAttend.bind(this)}
+        flag={attending}
+        notAvailableText={"You are attending this event"}
+        btnText={"I'm going!"} />
+    );
   }
 
   renderInterest(interested) {
-    const handleInterest = this.handleInterest.bind(this);
-
-    if (interested) {
-      return <span>You are interested in this event</span>;
-    } else {
-      return (
-        <button
-          type="button"
-          disabled={interested}
-          onClick={handleInterest}>This looks interesting!</button>
-      );
-    }
+    return (
+      <ConfButton
+        callback={this.handleInterest.bind(this)}
+        flag={interested}
+        notAvailableText={"You are interested in this event"}
+        btnText={"This looks interesting!"} />
+    );
   }
 
   render() {

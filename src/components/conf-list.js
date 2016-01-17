@@ -11,6 +11,7 @@ const ConfList = ({ userData, confsData, dispatch }) => {
 
         return (
           <Conf
+            username={userData.name}
             attending={attending}
             interested={interested}
             conf={conf}
