@@ -2,22 +2,10 @@ import React from 'react';
 import Conf from './conf';
 import includes from 'lodash/collection/includes';
 
-const ConfList = ({ userData, confsData, dispatch }) => {
+const ConfList = ({ conferences }) => {
   return (
     <ul>
-      {confsData.map(conf => {
-        const attending = includes(conf.peopleGoing, userData.name);
-        const interested = includes(conf.peopleInterested, userData.name);
-
-        return (
-          <Conf
-            username={userData.name}
-            attending={attending}
-            interested={interested}
-            conf={conf}
-            key={conf.id}
-            dispatch={dispatch} />);
-      })}
+      {conferences.map(conf => <Conf conf={conf} key={conf.id} />)}
     </ul>
   );
 }

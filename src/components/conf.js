@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { goToConf, interestedInConf } from '../actions';
 import ConfButton from './conf-button';
 
-class Conf extends Component {
+export class Conf extends Component {
   handleAttend() {
     this.props.dispatch(
       goToConf(this.props.conf, this.props.username)
@@ -71,4 +72,10 @@ class Conf extends Component {
   }
 }
 
-export default Conf;
+export default connect((state, props, dispatch) => {
+  const username = state.user.name;
+  const conf = props.conf;
+  const attending = includes(props.conf.peopleGoing, name);
+  const interested = includes(props.conf.peopleInterested, name);
+  return { username, attending, interested, conf, dispatch };
+})(Conf);

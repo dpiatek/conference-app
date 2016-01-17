@@ -1,7 +1,7 @@
 import expect from 'expect';
 import User from '../src/components/user';
 import { UserConfList, userConfListSelector } from '../src/components/user-conf-list';
-import Conf from '../src/components/conf';
+import { Conf } from '../src/components/conf';
 import ConfList from '../src/components/conf-list';
 import ConfForm from '../src/components/conf-form';
 import ReactDOMServer from 'react-dom/server';
@@ -74,24 +74,6 @@ describe('Conf', function() {
     );
     expect(string).toInclude("You are interested in this event");
     expect(string).toExclude("This looks interesting!");
-  });
-});
-
-describe('ConfList', function() {
-  it('renders correctly', function() {
-    const confsData = [
-      { id: 0, name: "BestConf", peopleGoing: ["Bob"], peopleInterested: [] },
-      { id: 1, name: "EvenBetterConf", peopleGoing: [], peopleInterested: [] }
-    ];
-    const userData = { name: "Bob" };
-    const string = ReactDOMServer.renderToString(
-      <ConfList confsData={confsData} userData={userData} />
-    );
-    expect(string)
-      .toInclude("BestConf")
-      .toInclude("EvenBetterConf")
-      .toInclude("You are attending this event")
-      .toInclude("This looks interesting!");
   });
 });
 
