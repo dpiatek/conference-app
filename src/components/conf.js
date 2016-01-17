@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { goToConf, interestedInConf } from '../actions';
 import ConfButton from './conf-button';
+import includes from 'lodash/collection/includes';
 
 export class Conf extends Component {
   handleAttend() {
@@ -72,10 +73,12 @@ export class Conf extends Component {
   }
 }
 
-export default connect((state, props, dispatch) => {
+export function confSelector(state, props, dispatch) {
   const username = state.user.name;
   const conf = props.conf;
-  const attending = includes(props.conf.peopleGoing, name);
-  const interested = includes(props.conf.peopleInterested, name);
+  const attending = includes(props.conf.peopleGoing, username);
+  const interested = includes(props.conf.peopleInterested, username);
   return { username, attending, interested, conf, dispatch };
-})(Conf);
+}
+
+export default connect(confSelector)(Conf);

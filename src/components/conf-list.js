@@ -1,6 +1,5 @@
 import React from 'react';
 import Conf from './conf';
-import includes from 'lodash/collection/includes';
 
 const ConfList = ({ conferences }) => {
   return (

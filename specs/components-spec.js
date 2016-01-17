@@ -1,7 +1,7 @@
 import expect from 'expect';
 import User from '../src/components/user';
 import { UserConfList, userConfListSelector } from '../src/components/user-conf-list';
-import { Conf } from '../src/components/conf';
+import { Conf, confSelector } from '../src/components/conf';
 import ConfList from '../src/components/conf-list';
 import ConfForm from '../src/components/conf-form';
 import ReactDOMServer from 'react-dom/server';
@@ -74,6 +74,27 @@ describe('Conf', function() {
     );
     expect(string).toInclude("You are interested in this event");
     expect(string).toExclude("This looks interesting!");
+  });
+
+  it('transforms props correctly', function () {
+    const dispatch = function(){};
+    const state = {
+      user: { name: "Jake" }
+    };
+    const props = {
+      conf: {
+        peopleGoing: [],
+        peopleInterested: [state.user.name]
+      }
+    };
+    const result = confSelector(state, props, dispatch);
+    expect(result).toEqual({
+      dispatch,
+      username: state.user.name,
+      conf: props.conf,
+      attending: false,
+      interested: true
+    });
   });
 });
 
