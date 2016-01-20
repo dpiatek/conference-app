@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import find from 'lodash/collection/find';
 import includes from 'lodash/collection/includes';
+import values from 'lodash/object/values';
 
 export class UserConfList extends Component {
   clickHandler(conf) {
@@ -32,7 +33,7 @@ export function userConfListSelector(state, props, dispatch) {
 
   return {
     name, dispatch,
-    confs: conferences.filter(c => includes(c[props.group], name))
+    confs: values(conferences).filter(c => includes(c[props.group], name))
   };
 }
 
