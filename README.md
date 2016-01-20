@@ -25,3 +25,5 @@ This runs the webpack-dev-server in [inline mode](https://webpack.github.io/docs
 - [ ] sourcemaps
 - [ ] calendar widget
 - [ ] propTypes
+- [ ] auth
+- [ ] offline capability
