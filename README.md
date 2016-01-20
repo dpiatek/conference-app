@@ -13,17 +13,6 @@ npm run serve
 This runs the webpack-dev-server in [inline mode](https://webpack.github.io/docs/webpack-dev-server.html#inline-mode).
 
 
-### Todo
+### Contributing
 
-- [ ] serverless backend (Firebase?)
-- [ ] design
-- [ ] hot reload
-- [ ] css modules
-- [ ] host on github?
-- [ ] eslint
-- [ ] circleci
-- [ ] sourcemaps
-- [ ] calendar widget
-- [ ] propTypes
-- [ ] auth
-- [ ] offline capability
+https://trello.com/b/LXDqhFBG/conference-app
