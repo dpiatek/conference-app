@@ -12,40 +12,29 @@ import {
 } from './actions';
 
 export function conference(state = {}, action) {
+  let key;
+
   switch (action.type) {
     case ADD_CONF:
-      return {
-        id: action.conf.id,
-        name: action.conf.name,
-        topic: action.conf.topic,
-        website: action.conf.website,
-        dateFrom: action.conf.dateFrom,
-        dateTo: action.conf.dateTo,
-        peopleGoing: [],
-        peopleInterested: []
-      }
+      key = Object.keys(action.conf);
+      const { name, topic, website, dateFrom, dateTo } = action.conf[key];
+      const conf = { name, topic, website, dateFrom, dateTo };
+
+      return { [key]: conf };
     case EDIT_CONF:
-      return assign({}, state, action.conf);
+      key = Object.keys(action.conf);
+      return { [key]: assign({}, state, action.conf[key]) } ;
     default:
       return state;
   }
 }
 
-export function conferences(state = [], action) {
+export function conferences(state = {}, action) {
   switch (action.type) {
     case ADD_CONF:
-      return [
-        ...state,
-        conference(void 0, action)
-      ]
+      return assign({}, state, conference(void 0, action))
     case EDIT_CONF:
-      const editIndex = findIndex(state, c => c.id === action.conf.id);
-
-      return [
-        ...state.slice(0, editIndex),
-        conference(state[editIndex], action),
-        ...state.slice(editIndex + 1)
-      ]
+      return assign({}, state, conference(state[action.confKey], action))
     case DELETE_CONF:
       const delIndex = findIndex(state, c => c.id === action.conf.id);
 
