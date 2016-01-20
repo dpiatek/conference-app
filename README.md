@@ -15,13 +15,13 @@ This runs the webpack-dev-server in [inline mode](https://webpack.github.io/docs
 
 ### Todo
 
-- [] serverless backend (Firebase?)
-- [] design
-- [] hot reload
-- [] css modules
-- [] host on github?
-- [] eslint
-- [] circleci
-- [] sourcemaps
-- [] calendar widget
-- [] propTypes
+- [ ] serverless backend (Firebase?)
+- [ ] design
+- [ ] hot reload
+- [ ] css modules
+- [ ] host on github?
+- [ ] eslint
+- [ ] circleci
+- [ ] sourcemaps
+- [ ] calendar widget
+- [ ] propTypes
