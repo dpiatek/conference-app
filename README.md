@@ -7,10 +7,10 @@ Currently in early stages, it's missing for example, a backend ;)
 ### Running
 
 ```
-npm i && npm run watch
+npm run serve
 ```
 
-The app does not include any server at the moment. You can run something like [http-server](https://www.npmjs.com/package/http-server) from root.
+This runs the webpack-dev-server in [inline mode](https://webpack.github.io/docs/webpack-dev-server.html#inline-mode).
 
 
 ### Todo
