@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { goToConf, interestedInConf } from '../actions';
 import ConfButton from './conf-button';
 import includes from 'lodash/collection/includes';
+import values from 'lodash/object/values';
 import s from './conf.css';
 
 const randomColor = () => {
@@ -15,15 +16,13 @@ const randomColor = () => {
 
 export class Conf extends Component {
   handleAttend() {
-    this.props.dispatch(
-      goToConf(this.props.conf, this.props.username)
-    );
+    const { username, confKey, fbRef } = this.props;
+    this.props.dispatch(goToConf(fbRef, username, confKey));
   }
 
   handleInterest() {
-    this.props.dispatch(
-      interestedInConf(this.props.conf, this.props.username)
-    );
+    const { username, confKey, fbRef } = this.props;
+    this.props.dispatch(interestedInConf(fbRef, username, confKey));
   }
 
   renderAttendance(attending) {
@@ -72,12 +71,12 @@ export class Conf extends Component {
 
         <div>People going:</div>
         <ul>
-          {peopleGoing.map(p => <li key={p}>{p}</li>)}
+          {values(peopleGoing).map(p => <li key={p}>{p}</li>)}
         </ul>
 
         <div>People interested in going:</div>
         <ul>
-          {peopleInterested.map(p => <li key={p}>{p}</li>)}
+          {values(peopleInterested).map(p => <li key={p}>{p}</li>)}
         </ul>
       </li>
     );
@@ -86,10 +85,10 @@ export class Conf extends Component {
 
 export function confSelector(state, props, dispatch) {
   const username = state.user.name;
-  const conf = props.conf;
+  const { conf, confKey, fbRef } = props;
   const attending = includes(props.conf.peopleGoing, username);
   const interested = includes(props.conf.peopleInterested, username);
-  return { username, attending, interested, conf, dispatch };
+  return { username, attending, interested, conf, dispatch, confKey, fbRef };
 }
 
 export default connect(confSelector)(Conf);

@@ -15,6 +15,7 @@ describe('conference reducer', function () {
   it('new conference', function () {
     const action = {
       type: ADD_CONF,
+      confKey: "key",
       conf: {
         id: 0,
         name: "JSConfBP",
@@ -26,53 +27,57 @@ describe('conference reducer', function () {
     };
 
     expect(conference(void 0, action))
-      .toEqual({
+      .toEqual({ "key": {
         id: 0,
         name: "JSConfBP",
         topic: "Javascript",
         website: "http://jsconfbp.com/",
         dateFrom: 1463007600000,
-        dateTo: 1463094000000,
-        peopleGoing: [],
-        peopleInterested: []
-      })
+        dateTo: 1463094000000
+      }});
   });
 
   it('edit a conference', function () {
-    const state = { id: 0, name: "A" };
+    const state = { name: "A" };
     const action = {
       type: EDIT_CONF,
-      conf: {
-        id: 0,
-        name: "B"
-      }
+      confKey: "key",
+      conf: { name: "B" }
     };
 
     deepFreeze(state);
 
     expect(conference(state, action))
-      .toEqual({ id: 0, name: "B" });
+      .toEqual({ "key": {
+        name: "B",
+        topic: undefined,
+        website: undefined,
+        dateFrom: undefined,
+        dateTo: undefined,
+        peopleGoing: undefined,
+        peopleInterested: undefined
+      }});
   });
 });
 
 describe('conferences reducer', function () {
   it('add a new conference', function () {
-    const action = { type: ADD_CONF, conf: { id: 0 } };
+    const action = { type: ADD_CONF, conf: { name: "A" }, confKey: "key" };
     deepFreeze(action);
-    expect(conferences(void 0, action).length).toEqual(1);
+    expect(conferences(void 0, action)).toEqual({ "key": { name: "A" }});
   });
 
   it('remove a conference', function () {
-    const action = { type: DELETE_CONF, conf: { id: 0 } };
-    const state = [{ id: 0 }];
+    const action = { type: DELETE_CONF, confKey: "key" };
+    const state = { "key": { name: "A" } };
     deepFreeze(action);
-    expect(conferences(state, action).length).toEqual(0);
+    expect(conferences(state, action)).toEqual({});
   });
 
   it('edit a conference', function () {
-    const action = { type: EDIT_CONF, conf: { id: 0, name: "B" } };
-    const state = [{ id: 0, name: "A" }];
+    const action = { type: EDIT_CONF, conf: { name: "B" }, confKey: "key" };
+    const state = { "key": { name: "A" } };
     deepFreeze(state);
-    expect(conferences(state, action)[0].name).toEqual("B");
+    expect(conferences(state, action).key.name).toEqual("B");
   });
 });

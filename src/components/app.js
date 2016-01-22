@@ -8,8 +8,8 @@ const App = ({ dispatch, user, conferences, fbRef }) => {
   return (
     <div>
       <User username={user.name} fbRef={fbRef} />
-      <ConfList conferences={conferences} />
-      <ConfForm dispatch={dispatch} />
+      <ConfList conferences={conferences} fbRef={fbRef} />
+      <ConfForm dispatch={dispatch} fbRef={fbRef} />
     </div>
   );
 }

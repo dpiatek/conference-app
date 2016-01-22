@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "List conferences and register your interest",
   "main": "public/index.html",
-  "engines" : {
-    "node" : "^5.3.0"
+  "engines": {
+    "node": "^5.3.0"
   },
   "scripts": {
     "build": "webpack",
@@ -16,10 +16,12 @@
   "dependencies": {
     "css-loader": "^0.23.1",
     "firebase": "^2.3.2",
+    "fireproof": "^3.1.0",
     "lodash": "^3.10.1",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-redux": "^4.0.5",
+    "redux-thunk": "^1.0.3",
     "style-loader": "^0.13.0"
   },
   "devDependencies": {
@@ -33,6 +35,7 @@
     "ignore-styles": "^1.2.0",
     "jsdom": "^7.2.2",
     "mocha": "^2.3.4",
+    "mockfirebase": "^0.12.0",
     "react-addons-test-utils": "^0.14.3",
     "redux-devtools": "^3.0.1",
     "redux-devtools-dock-monitor": "^1.0.1",

@@ -1,11 +1,14 @@
 import React from 'react';
+import values from 'lodash/object/values';
 import Conf from './conf';
 import s from './conf-list.css';
 
-const ConfList = ({ conferences }) => {
+const ConfList = ({ conferences, fbRef }) => {
   return (
     <ul className={s.list}>
-      {conferences.map(conf => <Conf conf={conf} key={conf.id} />)}
+      {Object
+        .keys(conferences)
+        .map(key => <Conf conf={conferences[key]} confKey={key} key={key} fbRef={fbRef} />)}
     </ul>
   );
 }
