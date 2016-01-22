@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "test": "NODE_ENV=test mocha --require babel-core/register --require  ./specs/setup.js ./specs/**/*-spec.js",
+    "test": "NODE_ENV=test mocha --require babel-core/register --require  ./specs/setup.js ./specs/**/*-spec.js ./src/**/*-spec.js",
     "serve": "webpack-dev-server --inline"
   },
   "author": "Dominik Piatek <do.piatek@gmail.com> (http://dominikpiatek.com)",
   "license": "MIT",
   "dependencies": {
+    "firebase": "^2.3.2",
     "lodash": "^3.10.1",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
