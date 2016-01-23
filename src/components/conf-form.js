@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { addConf } from '../actions';
+import s from './conf-form.css';
 
 class ConfForm extends Component {
   constructor() {
@@ -36,24 +37,24 @@ class ConfForm extends Component {
 
     return (
       <form onSubmit={handleSubmit} ref="confForm">
-        <div>Add conf</div>
-        <label>Name*
+        <legend className={s.legend}>Add conf</legend>
+        <label className={s.field}>Name*
           <input value={name} type="text" id="conf-name" required onChange={handleChange} />
         </label>
 
-        <label>Website*
+        <label className={s.field}>Website*
           <input value={website} type="text" id="conf-website" required onChange={handleChange} />
         </label>
 
-        <label>Topic
+        <label className={s.field}>Topic
           <input value={topic} type="text" id="conf-topic" onChange={handleChange} />
         </label>
 
-        <label>Date From
+        <label className={s.field}>Date From
           <input value={dateFrom} type="date" id="conf-dateFrom" onChange={handleChange} />
         </label>
 
-        <label>Date To
+        <label className={s.field}>Date To
           <input value={dateTo} type="date" id="conf-dateTo" onChange={handleChange} />
         </label>
 
