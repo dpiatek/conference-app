@@ -1,10 +1,14 @@
 var webpack = require('webpack');
+var path = require("path");
 
 module.exports = {
   devtool: "source-map",
   entry: "./src/index.js",
+  devServer: {
+    contentBase: "./public"
+  },
   output: {
-    path: __dirname,
+    path: path.resolve(__dirname, "public"),
     filename: "main.js"
   },
   module: {
