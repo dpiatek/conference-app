@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "test": "NODE_ENV=test mocha --require babel-core/register --require  ./specs/setup.js ./specs/**/*-spec.js ./src/**/*-spec.js",
+    "test": "NODE_ENV=test mocha --require babel-core/register --require ignore-styles --require  ./specs/setup.js ./specs/**/*-spec.js ./src/**/*-spec.js",
     "serve": "webpack-dev-server --inline"
   },
   "author": "Dominik Piatek <do.piatek@gmail.com> (http://dominikpiatek.com)",
@@ -27,6 +27,7 @@
     "babel-preset-stage-2": "^6.3.13",
     "deep-freeze": "0.0.1",
     "expect": "^1.13.4",
+    "ignore-styles": "^1.2.0",
     "jsdom": "^7.2.2",
     "mocha": "^2.3.4",
     "react-addons-test-utils": "^0.14.3",
