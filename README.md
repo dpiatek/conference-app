@@ -8,11 +8,15 @@ List conferences and register your interest.
 
 Uses [Firebase](firebase.com) for auth and backend, [Redux](http://redux.js.org/) and [React](https://facebook.github.io/react/) for the front end.
 
-### Developing
+## Developing
 
 See the [package.json](https://github.com/dpiatek/conference-app/blob/master/package.json#L9) for development scripts.
 
-## Dev tools
+### Deployment
+
+Deploys are automated thanks to [CircleCI](circleci.com). A passing build will deploy the app.
+
+### Dev tools
 
 The dev server is the webpack-dev-server running in [inline mode](https://webpack.github.io/docs/webpack-dev-server.html#inline-mode) with hot reloading. Redux [dev-tools](https://github.com/gaearon/redux-devtools) are also included. Press `ctrl-h` to show them, `ctrl-q` to switch the dock position.
 
