@@ -1,0 +1,10 @@
+.container {
+  background-color: whitesmoke;
+  padding: 0.5rem;
+}
+
+.userName {
+  margin: 0;
+  display: inline;
+  margin-right: 0.4em;
+}
