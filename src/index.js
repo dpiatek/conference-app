@@ -25,7 +25,17 @@ if (!auth) {
         website: "http://best.conf",
         dateFrom: 1463007600000,
         dateTo: 1463094000000,
-        peopleGoing: ["Kate"],
+        peopleGoing: ["Kate", "Dominik"],
+        peopleInterested: ["John", "Mary"]
+      },
+      {
+        id: 1,
+        name: "AlterConf",
+        topic: "Javascript",
+        website: "http://best.conf",
+        dateFrom: 1463007600000,
+        dateTo: 1463094000000,
+        peopleGoing: ["Kate", "Dominik"],
         peopleInterested: ["John", "Mary"]
       }
     ],
