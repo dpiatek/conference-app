@@ -1,5 +1,7 @@
 # conference-app
 
+[![Circle CI](https://circleci.com/gh/dpiatek/conference-app/tree/master.svg?style=svg)](https://circleci.com/gh/dpiatek/conference-app/tree/master)
+
 List conferences and register your interest.
 
 Currently in early stages, it's missing for example, a backend ;)
