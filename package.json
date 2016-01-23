@@ -1,8 +1,11 @@
 {
   "name": "conf-app",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "List conferences and register your interest",
+  "main": "public/index.html",
+  "engines" : {
+    "node" : "^5.3.0"
+  },
   "scripts": {
     "build": "webpack",
     "test": "NODE_ENV=test mocha --require babel-core/register --require ignore-styles --require  ./specs/setup.js ./specs/**/*-spec.js ./src/**/*-spec.js",
