@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import find from 'lodash/collection/find';
 import includes from 'lodash/collection/includes';
+import s from './user-conf-list.css';
 
 export class UserConfList extends Component {
   clickHandler(conf) {
@@ -13,12 +14,12 @@ export class UserConfList extends Component {
     const { confs } = this.props;
 
     return (
-      <ul>
+      <ul className={s.list}>
         {confs.map(conf => {
           return (
-            <li key={conf.id}>
+            <li className={s.listItem} key={conf.id}>
               <a href="">{conf.name}</a>
-              <button onClick={this.clickHandler.bind(this, conf)}>-</button>
+              <button className={s.button} onClick={this.clickHandler.bind(this, conf)}>-</button>
             </li>
           );
         })}

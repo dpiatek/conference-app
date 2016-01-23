@@ -1,0 +1,22 @@
+.list {
+  padding-left: 0;
+  display: inline;
+  margin-left: 0.1em;
+}
+
+.listItem {
+  display: inline;
+  margin-right: 0.8em;
+}
+
+.listItem:after {
+  content: ", ";
+}
+
+.listItem:last-child:after {
+  content: "";
+}
+
+.button {
+  margin: 0 0.1em 0 0.4em;
+}

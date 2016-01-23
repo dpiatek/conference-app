@@ -1,0 +1,20 @@
+.form {
+  background-color: whitesmoke;
+}
+
+.legend {
+  font-weight: bold;
+  margin-bottom: 0.2em;
+  padding: 0;
+}
+
+.field {
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+.field input {
+  display: block;
+  width: 50%;
+  max-width: 14rem;
+}

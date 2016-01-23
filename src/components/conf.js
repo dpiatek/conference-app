@@ -3,6 +3,15 @@ import { connect } from 'react-redux';
 import { goToConf, interestedInConf } from '../actions';
 import ConfButton from './conf-button';
 import includes from 'lodash/collection/includes';
+import s from './conf.css';
+
+const randomColor = () => {
+  const r = Math.round(Math.random() * 255);
+  const g = Math.round(Math.random() * 255);
+  const b = Math.round(Math.random() * 255);
+  const opacity = Math.random() / 1.2;
+  return `rgba(${r},${g},${b},${opacity})`;
+}
 
 export class Conf extends Component {
   handleAttend() {
@@ -45,12 +54,14 @@ export class Conf extends Component {
 
     const { attending, interested } = this.props;
 
+    const inlineStyles = { backgroundColor: randomColor() };
+
     return (
-      <li>
+      <li className={s.confItem} style={inlineStyles}>
         <div>
           <a href={website}>{name}</a>
         </div>
-        <div>{topic}</div>
+        <div>Topic: {topic}</div>
         <div>From: {dateFrom}</div>
         <div>To: {dateTo}</div>
 
