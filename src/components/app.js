@@ -5,17 +5,11 @@ import ConfForm from './conf-form';
 import { connect } from 'react-redux';
 
 const App = ({ dispatch, user, conferences, fbRef }) => {
-  const logout = () => {
-    fbRef.unauth();
-    document.location.reload();
-  }
-
   return (
     <div>
-      <User username={user.name} />
+      <User username={user.name} fbRef={fbRef} />
       <ConfList conferences={conferences} />
       <ConfForm dispatch={dispatch} />
-      <button onClick={logout}>Logout</button>
     </div>
   );
 }
