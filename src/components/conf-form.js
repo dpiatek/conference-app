@@ -5,13 +5,17 @@ import s from './conf-form.css';
 class ConfForm extends Component {
   constructor() {
     super();
-    this.state = {
-      name: "",
-      topic: "",
-      website: "",
-      dateFrom: "",
-      dateTo: ""
-    }
+    this.state = this.initialState();
+  }
+
+  initialState() {
+    return {
+      name: null,
+      topic: null,
+      website: null,
+      dateFrom: null,
+      dateTo: null
+    };
   }
 
   handleChange(e) {
@@ -22,12 +26,14 @@ class ConfForm extends Component {
   handleSubmit(e) {
     e.preventDefault();
     const { name, website } = this.state;
+    const fbRef = this.props.fbRef;
 
     if (!name || !website) {
       return;
     }
 
-    this.props.dispatch(addConf(this.state));
+    this.props.dispatch(addConf(fbRef, this.state));
+    this.setState(this.initialState());
   }
 
   render() {

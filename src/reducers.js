@@ -1,6 +1,6 @@
-import findIndex from 'lodash/array/findIndex';
 import find from 'lodash/collection/find';
 import assign from 'lodash/object/assign';
+import zipObject from 'lodash/array/zipObject';
 import {
   ADD_CONF,
   EDIT_CONF,
@@ -12,47 +12,36 @@ import {
 } from './actions';
 
 export function conference(state = {}, action) {
+  let key;
+
   switch (action.type) {
     case ADD_CONF:
-      return {
-        id: action.conf.id,
+      return { [action.confKey]: action.conf };
+    case EDIT_CONF:
+      return { [action.confKey]: assign({}, state, {
         name: action.conf.name,
         topic: action.conf.topic,
         website: action.conf.website,
         dateFrom: action.conf.dateFrom,
         dateTo: action.conf.dateTo,
-        peopleGoing: [],
-        peopleInterested: []
-      }
-    case EDIT_CONF:
-      return assign({}, state, action.conf);
+        peopleGoing: action.conf.peopleGoing,
+        peopleInterested: action.conf.peopleInterested
+      }) };
     default:
       return state;
   }
 }
 
-export function conferences(state = [], action) {
+export function conferences(state = {}, action) {
   switch (action.type) {
     case ADD_CONF:
-      return [
-        ...state,
-        conference(void 0, action)
-      ]
+      return assign({}, state, conference(void 0, action))
     case EDIT_CONF:
-      const editIndex = findIndex(state, c => c.id === action.conf.id);
-
-      return [
-        ...state.slice(0, editIndex),
-        conference(state[editIndex], action),
-        ...state.slice(editIndex + 1)
-      ]
+      return assign({}, state, conference(state[action.confKey], action))
     case DELETE_CONF:
-      const delIndex = findIndex(state, c => c.id === action.conf.id);
-
-      return [
-        ...state.slice(0, delIndex),
-        ...state.slice(delIndex + 1)
-      ]
+      const keys = Object.keys(state).filter(key => key !== action.confKey);
+      const values = keys.map(key => state[key]);
+      return zipObject(keys, values);
     default:
       return state;
   }

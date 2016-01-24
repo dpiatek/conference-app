@@ -15,7 +15,7 @@ describe('UserConfList', function() {
   it('renders correctly', function() {
     const confs = [{ id: 0, name: "BestConf" }];
     const string = ReactDOMServer.renderToString(
-      <UserConfList confs={confs} />
+      <UserConfList confKeys={["key"]} conferences={{"key": { name: "BestConf" }}} />
     );
     expect(string).toInclude("BestConf");
   });
@@ -23,13 +23,16 @@ describe('UserConfList', function() {
   it('transforms props correctly', function () {
     const dispatch = function(){};
     const state = {
-      conferences: [{ id: 0, name: "BestConf" }],
+      conferences: { "key": { name: "BestConf", peopleGoing: ["Jake"] }},
       user: { name: "Jake" }
     };
-    const props = { group: "peopleGoing" };
+    const props = { group: "peopleGoing", fbRef: {} };
     const result = userConfListSelector(state, props, dispatch);
     expect(result).toEqual({
-      dispatch, name: state.user.name, confs: []
+      dispatch, name: state.user.name,
+      conferences: state.conferences,
+      confKeys: ["key"],
+      fbRef: {}
     });
   });
 });
@@ -85,7 +88,9 @@ describe('Conf', function() {
       conf: {
         peopleGoing: [],
         peopleInterested: [state.user.name]
-      }
+      },
+      confKey: "key",
+      fbRef: {}
     };
     const result = confSelector(state, props, dispatch);
     expect(result).toEqual({
@@ -93,7 +98,9 @@ describe('Conf', function() {
       username: state.user.name,
       conf: props.conf,
       attending: false,
-      interested: true
+      interested: true,
+      confKey: "key",
+      fbRef: {}
     });
   });
 });

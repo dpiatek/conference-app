@@ -22,6 +22,7 @@ const User = ({ username, fbRef }) => {
         <span>Confs you are going to:</span>
         <UserConfList
           cancelCallback={cancelGoToConf}
+          fbRef={fbRef}
           group={"peopleGoing"} />
       </div>
 
@@ -29,6 +30,7 @@ const User = ({ username, fbRef }) => {
         <span>Maybe also:</span>
         <UserConfList
           cancelCallback={cancelInterestedInConf}
+          fbRef={fbRef}
           group={"peopleInterested"} />
       </div>
     </header>
