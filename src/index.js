@@ -23,9 +23,11 @@ if (!auth) {
   render(<LoginForm fbRef={ref} />, appRoot);
 } else {
   ref.once("value", function(snapshot) {
+    const data = snapshot.val()
+
     let store = createStoreWithMiddleware(
       combineReducers({conferences, user }),
-      snapshot.val()
+      { conferences: data.conferences, user: data.users[auth.uid] }
     );
 
     if (process.env.NODE_ENV === 'production') {

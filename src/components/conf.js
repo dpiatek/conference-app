@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { goToConf, interestedInConf } from '../actions';
+import { goToConf, interestedInConf, editConf } from '../actions';
 import ConfButton from './conf-button';
 import includes from 'lodash/collection/includes';
 import values from 'lodash/object/values';
@@ -15,14 +15,25 @@ const randomColor = () => {
 }
 
 export class Conf extends Component {
+  componentDidMount() {
+    const { confKey, fbRef, dispatch } = this.props;
+    fbRef.child('conferences').child(confKey).on('value', snapshot => {
+      dispatch(editConf(snapshot.val(), confKey));
+    });
+  }
+
+  componentWillUnmount() {
+    fbRef.off('value');
+  }
+
   handleAttend() {
-    const { username, confKey, fbRef } = this.props;
-    this.props.dispatch(goToConf(fbRef, username, confKey));
+    const { username, confKey, fbRef, dispatch } = this.props;
+    dispatch(goToConf(fbRef, username, confKey));
   }
 
   handleInterest() {
-    const { username, confKey, fbRef } = this.props;
-    this.props.dispatch(interestedInConf(fbRef, username, confKey));
+    const { username, confKey, fbRef, dispatch } = this.props;
+    dispatch(interestedInConf(fbRef, username, confKey));
   }
 
   renderAttendance(attending) {
