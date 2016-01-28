@@ -5,16 +5,21 @@ import { cancelGoToConf, cancelInterestedInConf } from '../actions';
 import s from './user.css';
 
 
-const User = ({ username, fbRef }) => {
+const User = ({ user, fbRef }) => {
   const logout = () => {
+    console.log("Logged out.")
     fbRef.unauth();
-    document.location.reload();
   }
 
   return (
     <header className={s.container}>
+      {
+        user.profileImage &&
+        <img className={s.profileImage} src={user.profileImage} alt={user.name} />
+      }
+
       <div>
-        <p className={s.userName}>User: {username}</p>
+        <p className={s.userName}>User: {user.name}</p>
         <button onClick={logout}>Logout</button>
       </div>
 

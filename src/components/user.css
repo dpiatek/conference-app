@@ -8,3 +8,8 @@
   display: inline;
   margin-right: 0.4em;
 }
+
+.profileImage {
+  width: 5rem;
+  height: 5rem;
+}
