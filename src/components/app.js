@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 const App = ({ dispatch, user, conferences, fbRef }) => {
   return (
     <div>
-      <User username={user.name} fbRef={fbRef} />
+      <User user={user} fbRef={fbRef} />
       <ConfList conferences={conferences} fbRef={fbRef} />
       <ConfForm dispatch={dispatch} fbRef={fbRef} />
     </div>

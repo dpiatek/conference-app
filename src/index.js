@@ -19,36 +19,68 @@ const auth = ref.getAuth();
 
 const appRoot = document.getElementById('app');
 
-if (!auth) {
-  render(<LoginForm fbRef={ref} />, appRoot);
-} else {
-  ref.once("value", function(snapshot) {
-    const data = snapshot.val()
+function renderApp(snapshot) {
+  const data = snapshot.val();
+  const auth = ref.getAuth();
 
-    let store = createStoreWithMiddleware(
-      combineReducers({conferences, user }),
-      { conferences: data.conferences, user: data.users[auth.uid] }
-    );
+  if (!auth) {
+    return;
+  }
 
-    if (process.env.NODE_ENV === 'production') {
-      render(
-        <Provider store={store}>
+  const userData = auth.provider === "google" ? {
+    name:  auth.google.displayName,
+    profileImage: auth.google.profileImageURL
+  } : data.users[auth.uid];
+
+  let store = createStoreWithMiddleware(
+    combineReducers({conferences, user }),
+    { conferences: data.conferences, user: userData }
+  );
+
+  if (process.env.NODE_ENV === 'production') {
+    render(
+      <Provider store={store}>
+        <App fbRef={ref} />
+      </Provider>,
+      appRoot
+    )
+  } else {
+    render(
+      <Provider store={store}>
+        <div>
           <App fbRef={ref} />
-        </Provider>,
-        appRoot
-      )
-    } else {
-      render(
-        <Provider store={store}>
-          <div>
-            <App fbRef={ref} />
-            <DevTools />
-          </div>
-        </Provider>,
-        appRoot
-      )
-    }
-  }, function (errorObject) {
-    console.log("The read failed: " + errorObject.code);
-  });
+          <DevTools />
+        </div>
+      </Provider>,
+      appRoot
+    )
+  }
 }
+
+function renderLogin(error) {
+  render(
+    <div>
+      <h1>Events App</h1>
+      <LoginForm fbRef={ref} error={error} />
+    </div>,
+    appRoot);
+}
+
+function initialRender() {
+  ref
+    .once("value", snapshot => renderApp(snapshot))
+    .catch(function (errorObject) {
+      console.error("The read failed: ", errorObject.code);
+      let error;
+
+      if (errorObject.code === "PERMISSION_DENIED") {
+        error = "You don't have permisson to access this app.";
+      } else {
+        error = "Oops - something went wrong. The app is unavailable.";
+      }
+
+      renderLogin(error);
+    })
+}
+
+ref.onAuth(auth => auth ? initialRender() : renderLogin());

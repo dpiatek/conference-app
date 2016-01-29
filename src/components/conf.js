@@ -23,6 +23,7 @@ export class Conf extends Component {
   }
 
   componentWillUnmount() {
+    const { fbRef } = this.props;
     fbRef.off('value');
   }
 
