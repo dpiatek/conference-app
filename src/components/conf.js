@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { goToConf, interestedInConf, editConf } from '../actions';
+import { goToConf, interestedInConf, editConf, deleteConf } from '../actions';
 import ConfButton from './conf-button';
 import includes from 'lodash/collection/includes';
 import values from 'lodash/object/values';
@@ -15,18 +15,6 @@ const randomColor = () => {
 }
 
 export class Conf extends Component {
-  componentDidMount() {
-    const { confKey, fbRef, dispatch } = this.props;
-    fbRef.child('conferences').child(confKey).on('value', snapshot => {
-      dispatch(editConf(snapshot.val(), confKey));
-    });
-  }
-
-  componentWillUnmount() {
-    const { fbRef } = this.props;
-    fbRef.off('value');
-  }
-
   handleAttend() {
     const { username, confKey, fbRef, dispatch } = this.props;
     dispatch(goToConf(fbRef, username, confKey));
@@ -35,6 +23,12 @@ export class Conf extends Component {
   handleInterest() {
     const { username, confKey, fbRef, dispatch } = this.props;
     dispatch(interestedInConf(fbRef, username, confKey));
+  }
+
+  handleDelete() {
+    const { fbRef, confKey, dispatch } = this.props;
+    const confirm = window.confirm("Are you sure you want to remove this event");
+    confirm && dispatch(deleteConf(fbRef, confKey));
   }
 
   renderAttendance(attending) {
@@ -66,6 +60,7 @@ export class Conf extends Component {
     const { attending, interested } = this.props;
 
     const inlineStyles = { backgroundColor: randomColor() };
+    const handleDelete = this.handleDelete.bind(this);
 
     return (
       <li className={s.confItem} style={inlineStyles}>
@@ -90,6 +85,8 @@ export class Conf extends Component {
         <ul>
           {values(peopleInterested).map(p => <li key={p}>{p}</li>)}
         </ul>
+
+        <button onClick={handleDelete}>Delete Event</button>
       </li>
     );
   }
