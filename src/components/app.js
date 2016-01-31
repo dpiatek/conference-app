@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import User from './user';
-import ConfList from './conf-list';
+import CalendarView from './calendar-view';
 import ConfForm from './conf-form';
 import { connect } from 'react-redux';
 import isEqual from 'lodash/lang/isEqual';
@@ -37,7 +37,7 @@ class App extends Component {
     return (
       <div>
         <User user={user} fbRef={fbRef} />
-        <ConfList conferences={conferences} fbRef={fbRef} />
+        <CalendarView conferences={conferences} fbRef={fbRef} />
         <ConfForm dispatch={dispatch} fbRef={fbRef} />
       </div>
     );

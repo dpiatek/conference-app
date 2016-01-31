@@ -56,7 +56,7 @@ function renderApp() {
       }
     })
     .catch(errorObject => {
-      console.error("The read failed: ", errorObject.code);
+      console.error("The read failed: ", errorObject);
       let error;
 
       if (errorObject.code === "PERMISSION_DENIED") {
