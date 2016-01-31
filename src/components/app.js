@@ -32,13 +32,18 @@ class App extends Component {
   }
 
   render() {
-    const { dispatch, user, conferences, fbRef } = this.props;
+    const { dispatch, user, conferences, fbRef, view } = this.props;
+    let editConf;
+
+    if (view.editing) {
+      editConf = conferences[view.editing]
+    }
 
     return (
       <div>
         <User user={user} fbRef={fbRef} />
         <CalendarView conferences={conferences} fbRef={fbRef} />
-        <ConfForm dispatch={dispatch} fbRef={fbRef} />
+        <ConfForm editConf={editConf} editConfKey={view.editing} dispatch={dispatch} fbRef={fbRef} />
       </div>
     );
   }

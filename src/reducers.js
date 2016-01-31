@@ -4,6 +4,8 @@ import {
   RECEIVE_CONF,
   UPDATE_CONF,
   REMOVE_CONF,
+  EDITING_CONF,
+  VIEWING_CONF
 } from './actions';
 
 export function conference(state = {}, action) {
@@ -44,4 +46,15 @@ export function conferences(state = {}, action) {
 
 export function user(state = {}, action) {
   return state;
+}
+
+export function view(state = {}, action) {
+  switch (action.type) {
+    case EDITING_CONF:
+      return assign({}, state, { editing: action.confKey })
+    case VIEWING_CONF:
+      return assign({}, state, { editing: null })
+    default:
+      return state;
+  }
 }
