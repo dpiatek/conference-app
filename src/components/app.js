@@ -4,7 +4,7 @@ import CalendarView from './calendar-view';
 import ConfForm from './conf-form';
 import { connect } from 'react-redux';
 import isEqual from 'lodash/lang/isEqual';
-import { removeConf, updateConf, receiveConf } from '../actions';
+import { removeConf, updateConf, receiveConf } from '../actions/async';
 
 class App extends Component {
   componentDidMount() {
@@ -42,8 +42,8 @@ class App extends Component {
     return (
       <div>
         <User user={user} fbRef={fbRef} />
-        <CalendarView conferences={conferences} fbRef={fbRef} />
         <ConfForm editConf={editConf} editConfKey={view.editing} dispatch={dispatch} fbRef={fbRef} />
+        <CalendarView conferences={conferences} fbRef={fbRef} />
       </div>
     );
   }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { addConf, editConf } from '../actions';
+import { addConf, editConf } from '../actions/async';
 import s from './conf-form.css';
 
 class ConfForm extends Component {

@@ -6,7 +6,7 @@ import {
   interestedInConf,
   cancelGoToConf,
   cancelInterestedInConf
-} from '../src/actions';
+} from '../src/actions/async';
 
 const setup = (conf) => {
   deepFreeze(conf);
