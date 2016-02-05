@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import User from './user';
-import ConfList from './conf-list';
+import CalendarView from './calendar-view';
 import ConfForm from './conf-form';
 import { connect } from 'react-redux';
 import isEqual from 'lodash/lang/isEqual';
-import { removeConf, updateConf, receiveConf } from '../actions';
+import { removeConf, updateConf, receiveConf } from '../actions/async';
 
 class App extends Component {
   componentDidMount() {
@@ -32,13 +32,18 @@ class App extends Component {
   }
 
   render() {
-    const { dispatch, user, conferences, fbRef } = this.props;
+    const { dispatch, user, conferences, fbRef, view } = this.props;
+    let editConf;
+
+    if (view.editing) {
+      editConf = conferences[view.editing]
+    }
 
     return (
       <div>
         <User user={user} fbRef={fbRef} />
-        <ConfList conferences={conferences} fbRef={fbRef} />
-        <ConfForm dispatch={dispatch} fbRef={fbRef} />
+        <ConfForm editConf={editConf} editConfKey={view.editing} dispatch={dispatch} fbRef={fbRef} />
+        <CalendarView conferences={conferences} fbRef={fbRef} />
       </div>
     );
   }

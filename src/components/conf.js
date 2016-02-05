@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { goToConf, interestedInConf, editConf, deleteConf } from '../actions';
+import { goToConf, interestedInConf, deleteConf, editingConf } from '../actions/async';
 import ConfButton from './conf-button';
 import includes from 'lodash/collection/includes';
 import values from 'lodash/object/values';
@@ -29,6 +29,11 @@ export class Conf extends Component {
     const { fbRef, confKey, dispatch } = this.props;
     const confirm = window.confirm("Are you sure you want to remove this event");
     confirm && dispatch(deleteConf(fbRef, confKey));
+  }
+
+  handleEdit() {
+    const { confKey, dispatch } = this.props;
+    dispatch(editingConf(confKey));
   }
 
   renderAttendance(attending) {
@@ -61,6 +66,7 @@ export class Conf extends Component {
 
     const inlineStyles = { backgroundColor: randomColor() };
     const handleDelete = this.handleDelete.bind(this);
+    const handleEdit = this.handleEdit.bind(this);
 
     return (
       <li className={s.confItem} style={inlineStyles}>
@@ -87,6 +93,7 @@ export class Conf extends Component {
         </ul>
 
         <button onClick={handleDelete}>Delete Event</button>
+        <button onClick={handleEdit}>Edit Event</button>
       </li>
     );
   }

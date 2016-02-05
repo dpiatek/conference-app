@@ -1,4 +1,4 @@
-import { conferences, user } from './reducers';
+import { conferences, user, view } from './reducers';
 import { createStore as _createStore, combineReducers, applyMiddleware } from 'redux';
 import DevTools from './dev-tools';
 import App from './components/app';
@@ -32,7 +32,7 @@ function renderApp() {
       } : data.users[auth.uid];
 
       let store = createStoreWithMiddleware(
-        combineReducers({ conferences, user }),
+        combineReducers({ conferences, user, view }),
         { conferences: data.conferences, user: userData }
       );
 
@@ -56,7 +56,7 @@ function renderApp() {
       }
     })
     .catch(errorObject => {
-      console.error("The read failed: ", errorObject.code);
+      console.error("The read failed: ", errorObject);
       let error;
 
       if (errorObject.code === "PERMISSION_DENIED") {

@@ -1,7 +1,7 @@
 import React from 'react';
 import UserConfList from './user-conf-list';
 import includes from 'lodash/collection/includes';
-import { cancelGoToConf, cancelInterestedInConf } from '../actions';
+import { cancelGoToConf, cancelInterestedInConf } from '../actions/async';
 import s from './user.css';
 
 

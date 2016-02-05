@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { addConf } from '../actions';
+import { addConf, editConf } from '../actions/async';
 import s from './conf-form.css';
 
 class ConfForm extends Component {
@@ -18,6 +18,12 @@ class ConfForm extends Component {
     };
   }
 
+  componentWillReceiveProps(newProps) {
+    if (newProps.editConf) {
+      this.setState(newProps.editConf);
+    }
+  }
+
   handleChange(e) {
     const key = e.target.id.match(/-(.+$)/)[1];
     this.setState({ [key]: e.target.value });
@@ -32,7 +38,12 @@ class ConfForm extends Component {
       return;
     }
 
-    this.props.dispatch(addConf(fbRef, this.state));
+    if (this.props.editConf && this.props.editConfKey) {
+      this.props.dispatch(editConf(fbRef, this.state, this.props.editConfKey));
+    } else {
+      this.props.dispatch(addConf(fbRef, this.state));
+    }
+
     this.setState(this.initialState());
   }
 
