@@ -1,0 +1,13 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.calendarView {
+  width: 100%;
+}

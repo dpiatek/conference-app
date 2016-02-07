@@ -1,15 +1,12 @@
 .container {
   background-color: whitesmoke;
   padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
 }
 
 .userName {
   margin: 0;
   display: inline;
   margin-right: 0.4em;
-}
-
-.profileImage {
-  width: 5rem;
-  height: 5rem;
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { goToConf, interestedInConf, deleteConf, editingConf } from '../actions/async';
+import { goToConf, interestedInConf, deleteConf } from '../actions/async';
+import { editingConf } from '../actions';
 import ConfButton from './conf-button';
 import includes from 'lodash/collection/includes';
 import values from 'lodash/object/values';

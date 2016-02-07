@@ -51,9 +51,10 @@ export function user(state = {}, action) {
 export function view(state = {}, action) {
   switch (action.type) {
     case EDITING_CONF:
-      return assign({}, state, { editing: action.confKey })
+      const adding = !action.confKey;
+      return assign({}, state, { editing: action.confKey, adding: adding });
     case VIEWING_CONF:
-      return assign({}, state, { editing: null })
+      return assign({}, state, { editing: null, adding: false });
     default:
       return state;
   }

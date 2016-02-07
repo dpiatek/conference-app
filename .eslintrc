@@ -7,7 +7,7 @@
   "plugins": ["react"],
   "rules": {
     "semi": [2, "always"],
-    "quotes": [2, "double"],
+    "quotes": 0,
     "comma-dangle": [2, "never"],
     "func-names": 0,
     "key-spacing": 0,

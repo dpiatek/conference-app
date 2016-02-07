@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { addConf, editConf } from '../actions/async';
 import s from './conf-form.css';
+import classnames from 'classnames';
 
 class ConfForm extends Component {
   constructor() {
@@ -21,6 +22,8 @@ class ConfForm extends Component {
   componentWillReceiveProps(newProps) {
     if (newProps.editConf) {
       this.setState(newProps.editConf);
+    } else if (newProps.addConf) {
+      this.setState(this.initialState());
     }
   }
 
@@ -51,9 +54,12 @@ class ConfForm extends Component {
     const { name, topic, website, dateFrom, dateTo } = this.state;
     const handleChange = this.handleChange.bind(this);
     const handleSubmit = this.handleSubmit.bind(this);
+    const formClasses = classnames(s.form, {
+      [s.formShow]: this.props.addConf || this.props.editConfKey
+    });
 
     return (
-      <form onSubmit={handleSubmit} ref="confForm">
+      <form className={formClasses} onSubmit={handleSubmit} ref="confForm">
         <legend className={s.legend}>Add conf</legend>
         <label className={s.field}>Name*
           <input value={name} type="text" id="conf-name" required onChange={handleChange} />

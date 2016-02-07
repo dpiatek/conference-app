@@ -1,5 +1,12 @@
 .form {
   background-color: whitesmoke;
+  padding: 0.5rem;
+  width: 33%;
+  display: none;
+}
+
+.formShow {
+  display: block;
 }
 
 .legend {

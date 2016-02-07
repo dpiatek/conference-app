@@ -5,6 +5,7 @@ import ConfForm from './conf-form';
 import { connect } from 'react-redux';
 import isEqual from 'lodash/lang/isEqual';
 import { removeConf, updateConf, receiveConf } from '../actions/async';
+import appStyles from './app.css';
 
 class App extends Component {
   componentDidMount() {
@@ -36,14 +37,21 @@ class App extends Component {
     let editConf;
 
     if (view.editing) {
-      editConf = conferences[view.editing]
+      editConf = conferences[view.editing];
     }
 
     return (
-      <div>
-        <User user={user} fbRef={fbRef} />
-        <ConfForm editConf={editConf} editConfKey={view.editing} dispatch={dispatch} fbRef={fbRef} />
-        <CalendarView conferences={conferences} fbRef={fbRef} />
+      <div className={appStyles.container}>
+        <ConfForm
+          editConf={editConf}
+          editConfKey={view.editing}
+          addConf={view.adding}
+          dispatch={dispatch}
+          fbRef={fbRef} />
+        <div className={appStyles.calendarView}>
+          <User user={user} fbRef={fbRef} dispatch={dispatch} view={view} />
+          <CalendarView conferences={conferences} fbRef={fbRef} />
+        </div>
       </div>
     );
   }

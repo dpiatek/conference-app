@@ -4,7 +4,7 @@ import map from 'lodash/collection/map';
 import assign from 'lodash/object/assign';
 import Conf from './conf';
 import ConfList from './conf-list';
-import s from './conf-list.css';
+import s from './calendar-container.css';
 
 const months = [ "January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December" ];
@@ -29,10 +29,10 @@ const CalendarView = ({ conferences, fbRef }) => {
   }, {});
 
   return (
-    <div>
+    <div className={s.container}>
       {map(confsByYears, (confsByMonths, year) =>
         <div key={year}>
-          <p>{year}</p>
+          {Object.keys(confsByYears).length > 1 && <p>{year}</p>}
           {map(confsByMonths, (confs, month) =>
             <div key={month}>
               <p>{months[month]}</p>
