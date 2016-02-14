@@ -1,6 +1,7 @@
 .container {
   background-color: whitesmoke;
-  padding: 0.5rem;
+  border-bottom: 1px solid #ddd;
+  padding: 1rem;
   display: flex;
   justify-content: space-between;
 }
@@ -9,4 +10,17 @@
   margin: 0;
   display: inline;
   margin-right: 0.4em;
+  font-style: italic;
+}
+
+.menuButton {
+  composes: button from '../shared.css';
+  font-size: 1.25em;
+  padding: 0.2em 0.55em;
+  line-height: 1;
+}
+
+.logoutButton {
+  composes: button from '../shared.css';
+  margin-left: 0.5em;
 }

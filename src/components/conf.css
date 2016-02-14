@@ -1,3 +1,134 @@
-.confItem {
-  padding: 0.5rem;
+.container {
+  border: 1px solid #ddd;
+  border-radius: 0.25em;
+  margin-bottom: 1rem;
+  max-width: 25rem;
+  min-width: 17rem;
+  position: relative;
+}
+
+.name {
+  padding: 1rem;
+  display: block;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: black;
+  background-color: whitesmoke;
+  border-radius: 3px 3px 0 0;
+}
+
+.date {
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+  padding: 1rem;
+  font-size: 1.1rem;
+}
+
+.date span:nth-child(2n+1),
+.date span:only-child {
+  /*font-weight: bold;*/
+}
+
+.peopleList {
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  align-items: center;
+}
+
+.peopleListLabel {
+  padding: 1em;
+  min-width: 3.5em;
+  display: block;
+  border-right: 1px solid #ddd;
+  font-weight: bold;
+}
+
+.peopleList ~ .peopleList {
+  padding-top: 0;
+}
+
+.peopleList ul {
+  padding: 1rem;
+  list-style: none;
+  width: 100%;
+}
+
+.peopleList li {
+  display: inline-block;
+  margin: 0 0.2em 0.1em 0;
+}
+
+.peopleList li:after {
+  content: ", ";
+}
+
+.peopleList li:last-child:after {
+  content: "";
+}
+
+.buttons {
+  display: flex;
+  padding: 1rem;
+  justify-content: space-around;
+}
+
+.button {
+  composes: button from '../shared.css';
+  width: 9em;
+}
+
+.green {
+  background-color: rgba(61,227,50,0.4);
+}
+
+.red {
+  background-color: rgba(248,26,10,0.35);
+}
+
+.openEdit {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 0.5em 0.5em 1.5em 1.5em;
+}
+
+.openEdit img {
+  height: 1em;
+  opacity: 0.3;
+}
+
+.openEdit:hover img {
+  opacity: 1;
+}
+
+.tagList {
+  border-bottom: 1px solid #ddd;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.tagList ul {
+  padding: 1rem;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tag {
+  text-align: center;
+  display: inline-block;
+  margin: 0 0.5em 0.5em 0;
+  padding: 0.3em 0.5em;
+  background-color: whitesmoke;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }

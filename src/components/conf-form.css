@@ -1,27 +1,55 @@
 .form {
   background-color: whitesmoke;
-  padding: 0.5rem;
+  padding: 1rem;
   width: 33%;
-  display: none;
-}
-
-.formShow {
-  display: block;
+  height: 100%;
+  max-width: 14rem;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  position: absolute;
+  z-index: 1;
+  transform: translateX(-100%);
+  transition: transform 0.2s ease-in-out;
 }
 
 .legend {
   font-weight: bold;
-  margin-bottom: 0.2em;
+  margin-bottom: 1em;
   padding: 0;
 }
 
 .field {
   display: block;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.8rem;
+}
+
+.field span {
+  display: block;
+  margin-bottom: 0.35rem;
 }
 
 .field input {
   display: block;
-  width: 50%;
+  width: 90%;
+  padding: 0.3em;
   max-width: 14rem;
+}
+
+.tags {
+  border: 0;
+  margin: 0 0 0.8rem 0;
+  padding: 0;
+}
+
+.tags legend {
+  margin-bottom: 0.35rem;
+}
+
+.tags label {
+  display: block;
+  margin-bottom: 0.15rem;
+}
+
+.button {
+  composes: button from '../shared.css';
 }

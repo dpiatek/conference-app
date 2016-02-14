@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "webpack",
-    "test": "NODE_ENV=test mocha --require babel-core/register --require ignore-styles --require  ./specs/setup.js ./specs/**/*-spec.js ./src/**/*-spec.js",
+    "test": "NODE_ENV=test mocha --require babel-core/register --require ./specs/spec-helper.js ./specs/**/*-spec.js ./src/**/*-spec.js",
     "serve": "webpack-dev-server --hot --inline"
   },
   "author": "Dominik Piatek <do.piatek@gmail.com> (http://dominikpiatek.com)",
@@ -19,6 +19,7 @@
     "firebase": "^2.3.2",
     "fireproof": "^3.1.0",
     "lodash": "^3.10.1",
+    "moment": "^2.11.2",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-redux": "^4.0.5",
@@ -36,7 +37,9 @@
     "eslint": "^1.10.3",
     "eslint-plugin-react": "^3.16.1",
     "expect": "^1.13.4",
+    "file-loader": "^0.8.5",
     "ignore-styles": "^1.2.0",
+    "image-webpack-loader": "^1.6.3",
     "jsdom": "^7.2.2",
     "mocha": "^2.3.4",
     "react-addons-test-utils": "^0.14.3",

@@ -1,0 +1,20 @@
+.button {
+  border: 1px solid #ddd;
+  padding: 0.7em;
+  font-size: 0.8rem;
+  cursor: pointer;
+  border-radius: 0.25em;
+  background-color: ghostwhite;
+}
+
+.button:focus,
+.button:active {
+  outline: 0;
+  border: 1px solid #888;
+}
+
+.button:disabled {
+  cursor: default;
+  color: #999;
+  background-color: #eee;
+}

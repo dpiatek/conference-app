@@ -19,12 +19,12 @@ const User = ({ user, fbRef, dispatch, view }) => {
 
   return (
     <header className={s.container}>
-      <button onClick={menuOpen ? closeMenu : addConf} className={s.addButton}>
+      <button onClick={menuOpen ? closeMenu : addConf} className={s.menuButton}>
         {menuOpen ? "-" : "+"}
       </button>
       <div>
         <p className={s.userName}>Hi, {user.name}</p>
-        <button onClick={logout}>Logout</button>
+        <button onClick={logout} className={s.logoutButton}>Logout</button>
       </div>
     </header>
   );

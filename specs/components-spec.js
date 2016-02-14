@@ -38,10 +38,10 @@ describe('UserConfList', function() {
 });
 
 describe('Conf', function() {
-  const conf = Object.freeze({
+  let conf = Object.freeze({
     id: 0,
     name: "BestConf",
-    topic: "Javascript",
+    tags: ["Javascript"],
     website: "http://best.conf",
     dateFrom: 1463007600000,
     dateTo: 1463094000000,
@@ -57,8 +57,8 @@ describe('Conf', function() {
       .toInclude("BestConf")
       .toInclude("Javascript")
       .toInclude("http://best.conf")
-      .toInclude("1463007600000")
-      .toInclude("1463094000000")
+      .toInclude("May 12th")
+      .toInclude("May 13th")
       .toInclude("Jake");
   });
 
@@ -66,17 +66,27 @@ describe('Conf', function() {
     const string = ReactDOMServer.renderToString(
       <Conf conf={conf} attending={true} />
     );
-    expect(string).toInclude("You are attending this event");
-    expect(string).toExclude("I&#x27;m going");
-    expect(string).toExclude("This looks interesting!");
+    expect(string).toInclude("Going");
+    expect(string).toInclude("Jake");
   });
 
   it('renders correctly interest', function() {
+    conf = Object.freeze({
+      id: 0,
+      name: "BestConf",
+      tags: ["Javascript"],
+      website: "http://best.conf",
+      dateFrom: 1463007600000,
+      dateTo: 1463094000000,
+      peopleGoing: [],
+      peopleInterested: ["Jake"]
+    });
+
     const string = ReactDOMServer.renderToString(
       <Conf conf={conf} interested={true} />
     );
-    expect(string).toInclude("You are interested in this event");
-    expect(string).toExclude("This looks interesting!");
+    expect(string).toInclude("Maybe");
+    expect(string).toInclude("Jake");
   });
 
   it('transforms props correctly', function () {
@@ -107,7 +117,8 @@ describe('Conf', function() {
 
 describe('ConfForm', function () {
   it('handles changes on a field', function () {
-    const instance = renderIntoDocument(<ConfForm />);
+    const props = { setFormWidthCallback: function(){} };
+    const instance = renderIntoDocument(<ConfForm { ...props } />);
     const input = scryTag(instance, 'input')[0];
     const node = findNode(input);
     node.value = "Alice";
@@ -117,7 +128,8 @@ describe('ConfForm', function () {
 
   it('does not submit an invalid conf', function () {
     const spy = expect.createSpy();
-    const instance = renderIntoDocument(<ConfForm dispatch={spy} />);
+    const props = { setFormWidthCallback: function(){}, dispatch: spy };
+    const instance = renderIntoDocument(<ConfForm { ...props } />);
     const form = findNode(instance);
     TestUtils.Simulate.submit(form);
     expect(spy).toNotHaveBeenCalled();
@@ -125,7 +137,8 @@ describe('ConfForm', function () {
 
   it('submits a valid form', function () {
     const spy = expect.createSpy();
-    const instance = renderIntoDocument(<ConfForm dispatch={spy} />);
+    const props = { setFormWidthCallback: function(){}, dispatch: spy };
+    const instance = renderIntoDocument(<ConfForm { ...props } />);
 
     const nameInput = scryTag(instance, 'input')[0];
     const nameNode = findNode(nameInput);

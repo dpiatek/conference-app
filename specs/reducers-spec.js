@@ -15,7 +15,7 @@ describe('conference reducer', function () {
       conf: {
         id: 0,
         name: "JSConfBP",
-        topic: "Javascript",
+        tags: ["Javascript"],
         website: "http://jsconfbp.com/",
         dateFrom: 1463007600000,
         dateTo: 1463094000000
@@ -26,7 +26,7 @@ describe('conference reducer', function () {
       .toEqual({ "key": {
         id: 0,
         name: "JSConfBP",
-        topic: "Javascript",
+        tags: ["Javascript"],
         website: "http://jsconfbp.com/",
         dateFrom: 1463007600000,
         dateTo: 1463094000000
@@ -46,7 +46,7 @@ describe('conference reducer', function () {
     expect(conference(state, action))
       .toEqual({ "key": {
         name: "B",
-        topic: undefined,
+        tags: undefined,
         website: undefined,
         dateFrom: undefined,
         dateTo: undefined,
