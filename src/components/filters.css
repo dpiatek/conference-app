@@ -1,0 +1,25 @@
+.container {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.container ul {
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.container li {
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.filter {
+  composes: button from '../shared.css';
+}
+
+.filterActive {
+  background-color: rgba(61,227,50,0.4);
+}

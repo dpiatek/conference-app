@@ -1,0 +1,17 @@
+.container {
+  padding: 0.5rem;
+}
+
+.yearContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.monthContainer {
+  margin-right: 2rem;
+}
+
+.monthName {
+  font-size: 1.25rem;
+  padding-bottom: 0.25em;
+}

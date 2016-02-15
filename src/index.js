@@ -9,6 +9,7 @@ import React from 'react';
 import thunk from 'redux-thunk';
 import Firebase from 'firebase';
 import Fireproof from 'fireproof';
+import s from './index.css';
 
 const createStore = DevTools.instrument()(_createStore);
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
@@ -71,7 +72,7 @@ function renderApp() {
 
 function renderLogin(error) {
   render(
-    <div>
+    <div className={s.login}>
       <h1>Events App</h1>
       <LoginForm fbRef={ref} error={error} />
     </div>,

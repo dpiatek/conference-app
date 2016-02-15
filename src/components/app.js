@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
 import User from './user';
+import Filters from './filters';
 import CalendarView from './calendar-view';
 import ConfForm from './conf-form';
 import { connect } from 'react-redux';
 import isEqual from 'lodash/lang/isEqual';
-import { removeConf, updateConf, receiveConf } from '../actions/async';
+import { removeConf, updateConf, receiveConf } from '../actions';
+import appStyles from './app.css';
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = { sidebarWidth: null };
+  }
+
   componentDidMount() {
     const { fbRef, dispatch, conferences } = this.props;
     const ref = fbRef.child('conferences');
@@ -31,19 +38,38 @@ class App extends Component {
     this.props.fbRef.off();
   }
 
+  setSidebarWidth(sidebarWidth) {
+    this.setState({ sidebarWidth });
+  }
+
   render() {
     const { dispatch, user, conferences, fbRef, view } = this.props;
+    const sidebarOpen = view.adding || view.editing;
+    const sidebarWidth = this.state.sidebarWidth || 0;
+    const containerStyles = { transform: `translateX(${Math.round(sidebarWidth)}px)` };
     let editConf;
 
     if (view.editing) {
-      editConf = conferences[view.editing]
+      editConf = conferences[view.editing];
     }
 
     return (
-      <div>
-        <User user={user} fbRef={fbRef} />
-        <ConfForm editConf={editConf} editConfKey={view.editing} dispatch={dispatch} fbRef={fbRef} />
-        <CalendarView conferences={conferences} fbRef={fbRef} />
+      <div className={appStyles.container}>
+        <ConfForm
+          sidebarOpen={sidebarOpen}
+          sidebarWidth={sidebarWidth}
+          editConf={editConf}
+          editConfKey={view.editing}
+          addConf={view.adding}
+          filters={view.filters}
+          dispatch={dispatch}
+          setFormWidthCallback={this.setSidebarWidth.bind(this)}
+          fbRef={fbRef} />
+        <div className={appStyles.calendarView} style={sidebarOpen ? containerStyles : {}}>
+          <User user={user} fbRef={fbRef} dispatch={dispatch} view={view} />
+          <Filters dispatch={dispatch} filters={view.filters} />
+          <CalendarView userName={user.name} conferences={conferences} fbRef={fbRef} filters={view.filters} />
+        </div>
       </div>
     );
   }
