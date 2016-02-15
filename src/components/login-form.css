@@ -1,23 +1,5 @@
-.form {
-  display: flex;
-  flex-direction: column;
-  width: 14rem;
-  justify-content: center;
-  border: 1px solid #ddd;
-  padding: 1rem;
-}
-
-.label {
-  margin-bottom: 1rem;
-}
-
-.input {
-  display: block;
-  width: 100%;
-}
-
 .button {
-  margin-bottom: 1rem;
+  composes: button from '../shared.css';
 }
 
 .error {

@@ -43,8 +43,8 @@ describe('Conf', function() {
     name: "BestConf",
     tags: ["Javascript"],
     website: "http://best.conf",
-    dateFrom: 1463007600000,
-    dateTo: 1463094000000,
+    dateFrom: "2015-05-12",
+    dateTo: "2015-05-13",
     peopleGoing: ["Jake"],
     peopleInterested: []
   });
