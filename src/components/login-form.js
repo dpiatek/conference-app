@@ -2,14 +2,27 @@ import React, { Component } from 'react';
 import s from './login-form.css';
 
 export default class LoginForm extends Component {
+  constructor() {
+    super();
+    this.state = {
+      error: ""
+    };
+  }
+
   handleGoogle(e) {
     e.preventDefault();
     const ref = this.props.fbRef;
 
     ref.authWithOAuthPopup("google", (error, authData) => {
+      // This check is done as well on FB side, here it's just to
+      // prevent showing errors when someone is logged into google
+      // but has no auth'd the app yet
+      const validEmail = /red-badger\.com/.test(authData.google.email);
+
       if (error) {
         this.setState({ error: "Login Failed!" });
-        console.error("Login Failed!", error);
+      } else if (!validEmail) {
+        this.setState({ error: "You don't have permisson to access this app." });
       } else {
         ref.child("users").child(authData.uid).set({
           provider: authData.provider,
@@ -17,14 +30,12 @@ export default class LoginForm extends Component {
           email: authData.google.email,
           profileImage: authData.google.profileImageURL
         });
-
-        console.log("Authenticated successfully with payload.");
       }
     }, { scope: "email" });
   }
 
   renderError() {
-    const error = this.props.error;
+    const error = this.state.error;
     return error && <p className={s.error}>{error}</p>;
   }
 

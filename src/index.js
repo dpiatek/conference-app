@@ -56,25 +56,14 @@ function renderApp() {
         )
       }
     })
-    .catch(errorObject => {
-      console.error("The read failed: ", errorObject);
-      let error;
-
-      if (errorObject.code === "PERMISSION_DENIED") {
-        error = "You don't have permisson to access this app.";
-      } else {
-        error = "Oops - something went wrong. The app is unavailable.";
-      }
-
-      renderLogin(error);
-    });
+    .catch(() => renderLogin());
 }
 
-function renderLogin(error) {
+function renderLogin() {
   render(
     <div className={s.login}>
       <h1>Events App</h1>
-      <LoginForm fbRef={ref} error={error} />
+      <LoginForm fbRef={ref} />
     </div>,
     appRoot);
 }
