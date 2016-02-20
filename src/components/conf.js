@@ -34,13 +34,15 @@ const formatDate = (dateString) => {
 };
 
 const formatDuration = (from, to) => {
+  const sameMonth = from.split(" ")[0] === to.split(" ")[0];
+
   if (from === to) {
     return <span>{from}</span>;
   } else {
     return [
       <span key="from">{from}</span>,
       " to ",
-      <span key="to">{to}</span>
+      <span key="to">{sameMonth ? to.split(" ")[1] : to}</span>
     ];
   }
 };
