@@ -61,7 +61,6 @@ class App extends Component {
           editConf={editConf}
           editConfKey={view.editing}
           addConf={view.adding}
-          filters={view.filters}
           dispatch={dispatch}
           setFormWidthCallback={this.setSidebarWidth.bind(this)}
           fbRef={fbRef} />

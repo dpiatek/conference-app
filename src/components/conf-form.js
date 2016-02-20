@@ -2,25 +2,28 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import any from 'lodash/collection/any';
 import filter from 'lodash/collection/filter';
+import isEqual from 'lodash/lang/isEqual';
 import { addConf, editConf } from '../actions/async';
 import s from './conf-form.css';
 import classnames from 'classnames';
 import { formFilters } from '../filter-list';
 
 class ConfForm extends Component {
-  constructor() {
+  constructor(props) {
     super();
-    this.state = this.initialState();
+    this.state = this.initialState(props);
   }
 
-  initialState() {
-    return {
+  initialState(props) {
+    const seed = (props && props.editConf) || {};
+
+    return Object.assign({
       name: null,
       tags: null,
       website: null,
       dateFrom: null,
       dateTo: null
-    };
+    }, seed);
   }
 
   componentDidMount() {
@@ -28,11 +31,16 @@ class ConfForm extends Component {
     this.props.setFormWidthCallback(node.getBoundingClientRect().width);
   }
 
-  componentWillReceiveProps(newProps) {
-    if (newProps.editConf) {
+  componentWillReceiveProps(newProps, nextState) {
+    // Only update state if relevant previous props are different.
+    // This is a hack, we should not need to care about this and is caused
+    // by the edit and add form being the same forms, and using this hook
+    // to fill the data.
+    const prevProps = this.props;
+    if (newProps.editConf && !isEqual(prevProps.editConf, newProps.editConf)) {
       const { name, tags, website, dateFrom, dateTo } = newProps.editConf;
       this.setState({ name, tags, website, dateFrom, dateTo });
-    } else if (newProps.addConf) {
+    } else if (!prevProps.addConf && newProps.addConf) {
       this.setState(this.initialState());
     }
   }
@@ -73,7 +81,7 @@ class ConfForm extends Component {
 
   render() {
     const { name, tags, website, dateFrom, dateTo } = this.state;
-    const { addConf, editConfKey, filters, sidebarOpen, sidebarWidth } = this.props;
+    const { addConf, editConfKey, sidebarOpen, sidebarWidth } = this.props;
     const handleChange = this.handleChange.bind(this);
     const handleSubmit = this.handleSubmit.bind(this);
     const openStyles = {
