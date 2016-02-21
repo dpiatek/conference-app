@@ -27,9 +27,11 @@
   font-size: 1.1rem;
 }
 
-.date span:nth-child(2n+1),
-.date span:only-child {
-  /*font-weight: bold;*/
+.location {
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+  padding: 1rem;
+  font-size: 1.1rem;
 }
 
 .peopleList {

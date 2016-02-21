@@ -129,9 +129,17 @@ export class Conf extends Component {
     }
   }
 
+  renderLocation(location) {
+    return (
+      <div className={s.location}>
+        {location}
+      </div>
+    );
+  }
+
   render() {
     const {
-      name, website, dateFrom, tags,
+      name, website, dateFrom, tags, location,
       dateTo, peopleGoing, peopleInterested
     } = this.props.conf;
 
@@ -154,6 +162,8 @@ export class Conf extends Component {
         <div className={s.date}>
           {formatDuration(formatDate(dateFrom), formatDate(dateTo))}
         </div>
+
+        {location && this.renderLocation(location)}
 
         {this.renderPeopleList("Going", peopleGoing)}
         {this.renderPeopleList("Maybe", peopleInterested)}

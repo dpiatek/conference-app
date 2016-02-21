@@ -17,6 +17,7 @@ describe('conference reducer', function () {
         name: "JSConfBP",
         tags: ["Javascript"],
         website: "http://jsconfbp.com/",
+        location: "London",
         dateFrom: 1463007600000,
         dateTo: 1463094000000
       }
@@ -28,6 +29,7 @@ describe('conference reducer', function () {
         name: "JSConfBP",
         tags: ["Javascript"],
         website: "http://jsconfbp.com/",
+        location: "London",
         dateFrom: 1463007600000,
         dateTo: 1463094000000
       }});
@@ -48,6 +50,7 @@ describe('conference reducer', function () {
         name: "B",
         tags: undefined,
         website: undefined,
+        location: undefined,
         dateFrom: undefined,
         dateTo: undefined,
         peopleGoing: undefined,

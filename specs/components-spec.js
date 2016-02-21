@@ -43,6 +43,7 @@ describe('Conf', function() {
     name: "BestConf",
     tags: ["Javascript"],
     website: "http://best.conf",
+    location: "London",
     dateFrom: "2015-05-12",
     dateTo: "2015-05-13",
     peopleGoing: ["Jake"],
@@ -58,7 +59,7 @@ describe('Conf', function() {
       .toInclude("Javascript")
       .toInclude("http://best.conf")
       .toInclude("May 12th")
-      .toInclude("May 13th")
+      .toInclude("13th")
       .toInclude("Jake");
   });
 
@@ -76,6 +77,7 @@ describe('Conf', function() {
       name: "BestConf",
       tags: ["Javascript"],
       website: "http://best.conf",
+      location: "London",
       dateFrom: 1463007600000,
       dateTo: 1463094000000,
       peopleGoing: [],

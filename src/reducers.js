@@ -20,6 +20,7 @@ export function conference(state = {}, action) {
       return { [action.confKey]: assign({}, state, {
         name: action.conf.name,
         tags: action.conf.tags,
+        location: action.conf.location,
         website: action.conf.website,
         dateFrom: action.conf.dateFrom,
         dateTo: action.conf.dateTo,

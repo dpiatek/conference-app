@@ -20,6 +20,7 @@ class ConfForm extends Component {
     return Object.assign({
       name: null,
       tags: null,
+      location: null,
       website: null,
       dateFrom: null,
       dateTo: null
@@ -38,8 +39,8 @@ class ConfForm extends Component {
     // to fill the data.
     const prevProps = this.props;
     if (newProps.editConf && !isEqual(prevProps.editConf, newProps.editConf)) {
-      const { name, tags, website, dateFrom, dateTo } = newProps.editConf;
-      this.setState({ name, tags, website, dateFrom, dateTo });
+      const { name, tags, location, website, dateFrom, dateTo } = newProps.editConf;
+      this.setState({ name, tags, location, website, dateFrom, dateTo });
     } else if (!prevProps.addConf && newProps.addConf) {
       this.setState(this.initialState());
     }
@@ -80,7 +81,7 @@ class ConfForm extends Component {
   }
 
   render() {
-    const { name, tags, website, dateFrom, dateTo } = this.state;
+    const { name, tags, location, website, dateFrom, dateTo } = this.state;
     const { addConf, editConfKey, sidebarOpen, sidebarWidth } = this.props;
     const handleChange = this.handleChange.bind(this);
     const handleSubmit = this.handleSubmit.bind(this);
@@ -98,6 +99,10 @@ class ConfForm extends Component {
 
         <label className={s.field}>Website
           <input value={website} type="text" id="conf-website" required onChange={handleChange} />
+        </label>
+
+        <label className={s.field}>Location
+          <input value={location} type="text" id="conf-location" required onChange={handleChange} />
         </label>
 
         <fieldset className={s.tags}>
