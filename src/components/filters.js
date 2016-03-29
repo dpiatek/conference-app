@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import {connect} from 'react-redux';
 import any from 'lodash/collection/any';
 import styles from './filters.css';
 import { filterByTag, removeTagFilter } from '../actions';
@@ -6,12 +7,10 @@ import { filterList } from '../filter-list';
 
 class Filters extends Component {
   handleClick(filter, isEnabled) {
-    const { dispatch, filters } = this.props;
-
     if (isEnabled) {
-      dispatch(removeTagFilter(filter));
+      this.props.removeTagFilter(filter);
     } else {
-      dispatch(filterByTag(filter));
+      this.props.filterByTag(filter);
     }
   }
 
@@ -37,11 +36,16 @@ class Filters extends Component {
       </div>
     );
   }
-};
+}
 
 Filters.propTypes = {
   filters: PropTypes.array,
-  dispatch: PropTypes.func
+  dispatch: PropTypes.func,
+  removeTagFilter: PropTypes.func,
+  filterByTag: PropTypes.func
 };
 
-export default Filters;
+export default connect(({view}) => ({filters: view.filters}), dispatch => ({
+  removeTagFilter: filter => dispatch(removeTagFilter(filter)),
+  filterByTag: filter => dispatch(filterByTag(filter))
+}))(Filters);

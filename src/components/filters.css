@@ -1,7 +1,7 @@
 .container {
-  padding: 1rem;
-  margin-bottom: 1rem;
-  border-bottom: 1px solid #ddd;
+  padding: 0.5rem;
+  margin-bottom: 0;
+  background-color: #FFFFE9;
 }
 
 .container ul {
@@ -9,6 +9,8 @@
   list-style: none;
   display: flex;
   flex-wrap: wrap;
+  margin: 0.5rem 0 0;
+  justify-content: center;
 }
 
 .container li {
@@ -18,8 +20,13 @@
 
 .filter {
   composes: button from '../shared.css';
+  font-size: 0.8rem;
+  border: 0;
+  font-family: 'PT Sans Narrow', sans-serif;
+  font-weight: 700;
 }
 
 .filterActive {
-  background-color: rgba(61,227,50,0.4);
+  background-color: #49444B;
+  color: #FFFFE9;
 }

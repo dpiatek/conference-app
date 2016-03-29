@@ -1,5 +1,6 @@
 .container {
   padding: 0.5rem;
+  background-color: #FFE5C7;
 }
 
 .yearContainer {
@@ -8,10 +9,18 @@
 }
 
 .monthContainer {
-  margin-right: 2rem;
+  background-color: #FFFFE9;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #FFE5C7;
 }
 
 .monthName {
-  font-size: 1.25rem;
+  font-size: 2.2rem;
   padding-bottom: 0.25em;
+  font-weight: 600;
+  color: #F75F88;
+  margin: 0;
+  text-shadow: 3px 3px 0px rgba(73,68,75,0.2);
 }

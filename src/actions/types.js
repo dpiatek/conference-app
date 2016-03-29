@@ -1,0 +1,11 @@
+export const RECEIVE_CONF = "RECEIVE_CONF";
+export const UPDATE_CONF = "UPDATE_CONF";
+export const REMOVE_CONF = "REMOVE_CONF";
+export const EDITING_CONF = "EDITING_CONF";
+export const VIEWING_CONF = "VIEWING_CONF";
+export const FILTER_BY_TAG = "FILTER_BY_TAG";
+export const REMOVE_TAG_FILTER = "REMOVE_TAG_FILTER";
+export const SHOW_FILTERS = "SHOW_FILTERS";
+export const HIDE_FILTERS = "HIDE_FILTERS";
+export const SHOW_DETAILS = "SHOW_DETAILS";
+export const HIDE_DETAILS = "HIDE_DETAILS";

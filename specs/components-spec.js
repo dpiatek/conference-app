@@ -50,9 +50,13 @@ describe('Conf', function() {
     peopleInterested: []
   });
 
+  let view = Object.freeze({
+    showDetails: true
+  });
+
   it('renders correctly', function() {
     const string = ReactDOMServer.renderToString(
-      <Conf conf={conf} />
+      <Conf conf={conf} view={view} view={view} />
     );
     expect(string)
       .toInclude("BestConf")
@@ -65,7 +69,7 @@ describe('Conf', function() {
 
   it('renders correctly attendance', function() {
     const string = ReactDOMServer.renderToString(
-      <Conf conf={conf} attending={true} />
+      <Conf conf={conf} view={view} attending={true} />
     );
     expect(string).toInclude("Going");
     expect(string).toInclude("Jake");
@@ -85,7 +89,7 @@ describe('Conf', function() {
     });
 
     const string = ReactDOMServer.renderToString(
-      <Conf conf={conf} interested={true} />
+      <Conf conf={conf} view={view} interested={true} />
     );
     expect(string).toInclude("Maybe");
     expect(string).toInclude("Jake");
@@ -94,7 +98,8 @@ describe('Conf', function() {
   it('transforms props correctly', function () {
     const dispatch = function(){};
     const state = {
-      user: { name: "Jake" }
+      user: { name: "Jake" },
+      view: {}
     };
     const props = {
       conf: {
@@ -112,7 +117,8 @@ describe('Conf', function() {
       attending: false,
       interested: true,
       confKey: "key",
-      fbRef: {}
+      fbRef: {},
+      view: {}
     });
   });
 });

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+import {connect} from 'react-redux';
 import reduce from 'lodash/collection/reduce';
 import map from 'lodash/collection/map';
 import includes from 'lodash/collection/includes';
 import assign from 'lodash/object/assign';
 import difference from 'lodash/array/difference';
-import Conf from './conf';
+
 import ConfList from './conf-list';
 import s from './calendar-container.css';
 import { GOING_TO, INTERESTED_IN } from '../filter-list';
@@ -69,7 +70,7 @@ const CalendarView = ({ conferences, fbRef, filters, userName }) => {
           {Object.keys(confsByYears).length > 1 && <p>{year}</p>}
           {map(confsByMonths, (confs, month) =>
             <div key={month} className={s.monthContainer}>
-              <p className={s.monthName}>{months[month]}</p>
+              <p className={s.monthName}>{months[month]} {`(${Object.keys(confs).length})`}</p>
               <ConfList conferences={confs} fbRef={fbRef} />
             </div>
           )}
@@ -79,8 +80,19 @@ const CalendarView = ({ conferences, fbRef, filters, userName }) => {
   );
 };
 
+CalendarView.propTypes = {
+  conferences: PropTypes.object,
+  fbRef: PropTypes.object,
+  filters: PropTypes.array,
+  userName: PropTypes.string
+}
+
 CalendarView.defaultProps = {
   filters: []
 };
 
-export default CalendarView;
+export default connect(({view, conferences, user}) => ({
+  userName: user.name,
+  filters: view.filters,
+  conferences
+}))(CalendarView);

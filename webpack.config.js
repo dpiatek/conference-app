@@ -23,7 +23,11 @@ module.exports = {
         loader: 'style!css-loader?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
       },
       {
-        test: /\.(jpe?g|png|gif|svg)$/i,
+        test: /\.svg$/,
+        loader: "svg-inline"
+      },
+      {
+        test: /\.(jpe?g|png|gif)$/i,
         loaders: [
           'file?hash=sha512&digest=hex&name=[hash].[ext]',
           'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
@@ -34,7 +38,8 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       "process.env": {
-        NODE_ENV: JSON.stringify("development")
+        NODE_ENV: JSON.stringify("development"),
+        FIREBASE_URL: JSON.stringify(process.env.FIREBASE_URL)
       }
     })
   ]

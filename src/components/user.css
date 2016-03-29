@@ -1,7 +1,6 @@
 .container {
-  background-color: whitesmoke;
-  border-bottom: 1px solid #ddd;
-  padding: 1rem;
+  background-color: #49444B;
+  padding: 0.5rem;
   display: flex;
   justify-content: space-between;
 }
@@ -10,17 +9,30 @@
   margin: 0;
   display: inline;
   margin-right: 0.4em;
-  font-style: italic;
+  font-size: 0.8rem;
+  color: #FFFFE9;
+}
+
+.buttons {
+  display: flex;
+  min-width: 9rem;
+  align-items: center;
+}
+
+.buttons a {
+  color: #FFE5C7;
+  margin-right: 0.5rem;
 }
 
 .menuButton {
   composes: button from '../shared.css';
-  font-size: 1.25em;
-  padding: 0.2em 0.55em;
+  font-size: 0.8rem;
+  padding: 0.75em;
   line-height: 1;
 }
 
 .logoutButton {
   composes: button from '../shared.css';
   margin-left: 0.5em;
+  font-size: 0.75rem;
 }

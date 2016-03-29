@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import React, { Component, PropTypes } from 'react';
+import {push} from 'react-router-redux';
 import any from 'lodash/collection/any';
 import filter from 'lodash/collection/filter';
 import isEqual from 'lodash/lang/isEqual';
 import { addConf, editConf } from '../actions/async';
 import s from './conf-form.css';
-import classnames from 'classnames';
 import { formFilters } from '../filter-list';
 
 class ConfForm extends Component {
@@ -16,31 +15,30 @@ class ConfForm extends Component {
 
   initialState(props) {
     const seed = (props && props.editConf) || {};
+    return Object.assign(this.defaultProperties(), seed);
+  }
 
-    return Object.assign({
+  defaultProperties() {
+    return {
       name: null,
       tags: null,
       location: null,
       website: null,
       dateFrom: null,
-      dateTo: null
-    }, seed);
+      dateTo: null,
+      badgerSpeakers: null
+    }
   }
 
-  componentDidMount() {
-    const node = ReactDOM.findDOMNode(this);
-    this.props.setFormWidthCallback(node.getBoundingClientRect().width);
-  }
-
-  componentWillReceiveProps(newProps, nextState) {
+  componentWillReceiveProps(newProps) {
     // Only update state if relevant previous props are different.
     // This is a hack, we should not need to care about this and is caused
     // by the edit and add form being the same forms, and using this hook
     // to fill the data.
     const prevProps = this.props;
     if (newProps.editConf && !isEqual(prevProps.editConf, newProps.editConf)) {
-      const { name, tags, location, website, dateFrom, dateTo } = newProps.editConf;
-      this.setState({ name, tags, location, website, dateFrom, dateTo });
+      const { name, tags, location, website, dateFrom, dateTo, badgerSpeakers } = newProps.editConf;
+      this.setState({ name, tags, location, website, dateFrom, dateTo, badgerSpeakers });
     } else if (!prevProps.addConf && newProps.addConf) {
       this.setState(this.initialState());
     }
@@ -51,12 +49,12 @@ class ConfForm extends Component {
     this.setState({ [key]: e.target.value });
   }
 
-  handleCheckboxChange(checkBoxfilter, isEnabled, e) {
+  handleCheckboxChange(checkBoxfilter, isEnabled) {
     const tags = this.state.tags || [];
 
     if (isEnabled) {
       const updatedTags = filter(tags, t => t !== checkBoxfilter);
-      this.setState({ tags: updatedTags.length > 0 ? updatedTags : undefined });
+      this.setState({ tags: updatedTags.length > 0 ? updatedTags : null });
     } else {
       this.setState({ tags: tags.concat([checkBoxfilter]) });
     }
@@ -72,27 +70,29 @@ class ConfForm extends Component {
     }
 
     if (this.props.editConf && this.props.editConfKey) {
-      this.props.dispatch(editConf(fbRef, this.state, this.props.editConfKey));
+      this.props.dispatch(editConf(
+        fbRef,
+        {...this.defaultProperties(), ...this.state},
+        this.props.editConfKey));
     } else {
-      this.props.dispatch(addConf(fbRef, this.state));
+      this.props.dispatch(addConf(
+        fbRef,
+        {...this.defaultProperties(), ...this.state}));
     }
 
     this.setState(this.initialState());
+    this.props.dispatch(push('/'));
   }
 
   render() {
-    const { name, tags, location, website, dateFrom, dateTo } = this.state;
-    const { addConf, editConfKey, sidebarOpen, sidebarWidth } = this.props;
+    const { name, tags, location, website, dateFrom, dateTo, badgerSpeakers } = this.state;
+    const { addConf } = this.props;
     const handleChange = this.handleChange.bind(this);
     const handleSubmit = this.handleSubmit.bind(this);
-    const openStyles = {
-      transform: "translateX(0%)",
-      width: sidebarWidth
-    };
 
     return (
-      <form className={s.form} style={sidebarOpen ? openStyles : {}} onSubmit={handleSubmit} ref="confForm">
-        <legend className={s.legend}>{addConf ? "Add conf" : "Edit conf"}</legend>
+      <form className={s.form} onSubmit={handleSubmit} ref="confForm">
+        <legend className={s.legend}>{addConf ? "Add event" : "Edit event"}</legend>
         <label className={s.field}>Name
           <input value={name} type="text" id="conf-name" required onChange={handleChange} />
         </label>
@@ -118,7 +118,7 @@ class ConfForm extends Component {
                   value={isEnabled}
                   checked={isEnabled}
                   type="checkbox"
-                  onClick={this.handleCheckboxChange.bind(this, filter, isEnabled)} /> {filter}
+                  onChange={this.handleCheckboxChange.bind(this, filter, isEnabled)} /> {filter}
               </label>
             );
           })}
@@ -132,10 +132,22 @@ class ConfForm extends Component {
           <input value={dateTo} type="date" id="conf-dateTo" required onChange={handleChange} />
         </label>
 
+        <label className={s.field}>Badger Speakers
+          <textarea value={badgerSpeakers} id="conf-badgerSpeakers" onChange={handleChange} />
+        </label>
+
         <button className={s.button}>Submit</button>
       </form>
     );
   }
+}
+
+ConfForm.propTypes = {
+  fbRef: PropTypes.object,
+  editConf: PropTypes.object,
+  editConfKey: PropTypes.string,
+  dispatch: PropTypes.func,
+  addConf: PropTypes.bool
 }
 
 export default ConfForm;

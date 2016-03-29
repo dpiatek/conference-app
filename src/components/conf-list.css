@@ -1,6 +1,8 @@
 .list {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: flex-start;
   list-style: none;
   padding: 0;
 }

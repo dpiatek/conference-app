@@ -1,37 +1,22 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import moment from 'moment';
-import { goToConf, interestedInConf, deleteConf, cancelInterestedInConf, cancelGoToConf } from '../actions/async';
-import { editingConf } from '../actions';
-import ConfButton from './conf-button';
+import compact from 'lodash.compact';
 import includes from 'lodash/collection/includes';
 import values from 'lodash/object/values';
+
+import { goToConf, interestedInConf, cancelInterestedInConf, cancelGoToConf } from '../actions/async';
+import { editingConf } from '../actions';
+import ConfButton from './conf-button';
+
 import s from './conf.css';
 import widget from '../assets/widget.svg';
+import calendarIcon from '../assets/calendar-icon.svg';
+import starIcon from '../assets/star.svg';
+import badger from '../assets/badger-dude.svg';
 
-const calculateColor = (peopleGoing = [], peopleInterested = []) => {
-  const count = peopleGoing.concat(peopleInterested).length;
-  return `rgba(255,255,255,1)`;
-};
-
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December"
-];
-
-const formatDate = (dateString) => {
-  return moment(dateString).format("MMMM Do");
-};
+const formatDate = dateString => moment(dateString).format("MMMM Do");
 
 const formatDuration = (from, to) => {
   const sameMonth = from.split(" ")[0] === to.split(" ")[0];
@@ -58,12 +43,6 @@ export class Conf extends Component {
     dispatch(interestedInConf(fbRef, username, confKey));
   }
 
-  handleDelete() {
-    const { fbRef, confKey, dispatch } = this.props;
-    const confirm = window.confirm("Are you sure you want to remove this event");
-    confirm && dispatch(deleteConf(fbRef, confKey));
-  }
-
   handleCancelInterest() {
     const { username, confKey, fbRef, dispatch } = this.props;
     dispatch(cancelInterestedInConf(fbRef, username, confKey));
@@ -77,6 +56,7 @@ export class Conf extends Component {
   handleEdit() {
     const { confKey, dispatch } = this.props;
     dispatch(editingConf(confKey));
+    dispatch(push('/edit'));
   }
 
   renderAttendance(attending) {
@@ -85,7 +65,7 @@ export class Conf extends Component {
         addCallback={this.handleAttend.bind(this)}
         removeCallback={this.handleCancelAttendence.bind(this)}
         flag={attending}
-        btnText={attending ? "Not going" : "I'm going!"} />
+        btnText={"I'm going!"} />
     );
   }
 
@@ -96,14 +76,14 @@ export class Conf extends Component {
         removeCallback={this.handleCancelInterest.bind(this)}
         flag={interested}
         disabled={attending}
-        btnText={interested ? "Not interested" : "I'm interested!"} />
+        btnText={"I'm interested!"} />
     );
   }
 
   renderPeopleList(label, people) {
     if (people && people.length > 0) {
       return (
-        <div className={s.peopleList}>
+        <div className={s.peopleList} key={label}>
           <span className={s.peopleListLabel}>{label}:</span>
           <ul>
             {values(people).map(p => <li key={p}>{p}</li>)}
@@ -115,12 +95,13 @@ export class Conf extends Component {
     }
   }
 
-  renderTagList(tags) {
+  renderTagList(label, tags) {
     if (tags && tags.length > 0) {
       return (
-        <div className={s.tagList}>
+        <div className={s.peopleList} key="tags">
+          <span className={s.peopleListLabel}>{label}:</span>
           <ul>
-            {values(tags).map(t => <li className={s.tag} key={t}>{t}</li>)}
+            {values(tags).map(t => <li key={t}>{t}</li>)}
           </ul>
         </div>
       );
@@ -137,45 +118,125 @@ export class Conf extends Component {
     );
   }
 
+  getSpeakers(badgerSpeakersString) {
+    return typeof badgerSpeakersString === "string" ? compact(badgerSpeakersString.split(",")) : badgerSpeakersString;
+  }
+
+  renderBadgerSpeakers(label, badgerSpeakers) {
+    if (badgerSpeakers && badgerSpeakers.length > 0) {
+      return (
+        <div className={s.peopleList} key={label}>
+          <span className={s.peopleListLabel}>{label}:</span>
+          <ul>
+            {values(badgerSpeakers).map(p => <li key={p}>{p}</li>)}
+          </ul>
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
+
+  renderPeopleGoingCount(peopleGoing) {
+    if (peopleGoing) {
+      return (
+        <span className={s.goingCount}>
+          <span dangerouslySetInnerHTML={{__html: calendarIcon}}></span>
+          {peopleGoing.length}
+        </span>
+      );
+    } else {
+      return null;
+    }
+  }
+
+  renderPeopleInterestedCount(peopleInterested) {
+    if (peopleInterested) {
+      return (
+        <span className={s.interestedCount}>
+          <span dangerouslySetInnerHTML={{__html: starIcon}}></span>
+          {peopleInterested.length}
+        </span>
+      );
+    } else {
+      return null;
+    }
+  }
+
+  renderBadgerSpeakersCount(peopleSpeaking) {
+    if (peopleSpeaking) {
+      return (
+        <span className={s.badgerCount}>
+          <span dangerouslySetInnerHTML={{__html: badger}}></span>
+          {peopleSpeaking.length}
+        </span>
+      );
+    } else {
+      return null;
+    }
+  }
+
+  renderDetails(peopleGoing, peopleInterested, speakers, tags) {
+    return [
+      this.renderPeopleList("Going", peopleGoing),
+      this.renderPeopleList("Maybe", peopleInterested),
+      this.renderBadgerSpeakers("Speakers", speakers),
+      this.renderTagList("Tags", tags)
+    ];
+  }
+
   render() {
     const {
       name, website, dateFrom, tags, location,
-      dateTo, peopleGoing, peopleInterested
+      dateTo, peopleGoing, peopleInterested, badgerSpeakers
     } = this.props.conf;
 
-    const { attending, interested } = this.props;
+    const { attending, interested, view } = this.props;
+    const speakers = this.getSpeakers(badgerSpeakers);
 
-    const inlineStyles = { backgroundColor: calculateColor(peopleGoing, peopleInterested) };
-    const handleDelete = this.handleDelete.bind(this);
     const handleEdit = this.handleEdit.bind(this);
 
     return (
-      <li className={s.container} style={inlineStyles}>
+      <li className={s.container}>
         <button className={s.openEdit} onClick={handleEdit}>
-          <img src={widget} alt="open edit menu" />
+          <div dangerouslySetInnerHTML={{__html: widget}}></div>
         </button>
 
-        <a className={s.name} href={website}>
+        <a className={s.name} href={website} target="_blank">
           {name}
         </a>
+
+        {(peopleGoing || peopleInterested || speakers) ? <div className={s.counts}>
+          {this.renderPeopleGoingCount(peopleGoing)}
+          {this.renderPeopleInterestedCount(peopleInterested)}
+          {this.renderBadgerSpeakersCount(speakers)}
+        </div> : null}
+
+        <div className={s.buttons}>
+          {this.renderAttendance(attending)}
+          {this.renderInterest(attending, interested)}
+        </div>
 
         <div className={s.date}>
           {formatDuration(formatDate(dateFrom), formatDate(dateTo))}
         </div>
 
         {location && this.renderLocation(location)}
-
-        {this.renderPeopleList("Going", peopleGoing)}
-        {this.renderPeopleList("Maybe", peopleInterested)}
-        {this.renderTagList(tags)}
-
-        <div className={s.buttons}>
-          {this.renderAttendance(attending)}
-          {this.renderInterest(attending, interested)}
-        </div>
+        {view.showDetails ? this.renderDetails(peopleGoing, peopleInterested, speakers, tags) : null}
       </li>
     );
   }
+}
+
+Conf.propTypes = {
+  username: PropTypes.string,
+  confKey: PropTypes.string,
+  fbRef: PropTypes.object,
+  dispatch: PropTypes.func,
+  conf: PropTypes.object,
+  attending: PropTypes.bool,
+  interested: PropTypes.bool,
+  view: PropTypes.object
 }
 
 export function confSelector(state, props, dispatch) {
@@ -183,7 +244,7 @@ export function confSelector(state, props, dispatch) {
   const { conf, confKey, fbRef } = props;
   const attending = includes(props.conf.peopleGoing, username);
   const interested = includes(props.conf.peopleInterested, username);
-  return { username, attending, interested, conf, dispatch, confKey, fbRef };
+  return { username, attending, interested, conf, dispatch, confKey, fbRef, view: state.view };
 }
 
 export default connect(confSelector)(Conf);

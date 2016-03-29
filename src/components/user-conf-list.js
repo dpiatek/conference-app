@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import find from 'lodash/collection/find';
 import includes from 'lodash/collection/includes';
-import values from 'lodash/object/values';
 import s from './user-conf-list.css';
 
 export class UserConfList extends Component {
@@ -37,6 +35,15 @@ export function userConfListSelector(state, props, dispatch) {
     includes(conferences[key][props.group], name)
   );
   return { name, dispatch, confKeys, conferences, fbRef: props.fbRef };
+}
+
+UserConfList.propTypes = {
+  cancelCallback: PropTypes.func,
+  name: PropTypes.string,
+  fbRef: PropTypes.object,
+  confKeys: PropTypes.array,
+  conferences: PropTypes.object,
+  dispatch: PropTypes.func
 }
 
 export default connect(userConfListSelector)(UserConfList);

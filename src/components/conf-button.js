@@ -1,17 +1,27 @@
-import React, { Component } from 'react';
+import React, { PropTypes } from 'react';
 import styles from './conf.css';
 
-const ConfButton = ({ addCallback, removeCallback, disabled, flag, btnText }) => {
+const ConfButton = ({ addCallback, removeCallback, disabled = false, flag, btnText }) => {
   const callback = flag ? removeCallback : addCallback;
-  const color = flag ? styles.red : styles.green;
 
   return (
-    <button
-      className={`${styles.button} ${color}`}
-      disabled={disabled}
-      type="button"
-      onClick={callback}>{btnText}</button>
+    <label className={`${styles.button}`}>
+      <input
+        type="checkbox"
+        value={flag}
+        checked={flag}
+        disabled={disabled} onChange={callback} />
+      {btnText}
+    </label>
   );
 };
+
+ConfButton.propTypes = {
+  addCallback: PropTypes.func,
+  removeCallback: PropTypes.func,
+  disabled: PropTypes.bool,
+  flag: PropTypes.bool,
+  btnText: PropTypes.string
+}
 
 export default ConfButton;
