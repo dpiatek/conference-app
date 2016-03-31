@@ -1,43 +1,43 @@
 .container {
-  border: 1px solid #ddd;
+  border: 1px solid #49444B;
   border-radius: 0.25em;
+  margin-right: 1rem;
   margin-bottom: 1rem;
-  max-width: 25rem;
-  min-width: 17rem;
+  width: 13rem;
   position: relative;
+  box-shadow: 4px 4px 10px 1px rgba(73,68,75,0.3);
 }
 
 .name {
-  padding: 1rem;
+  padding: 0.5rem;
   display: block;
   text-align: center;
   border-bottom: 1px solid #ddd;
-  font-size: 1.25rem;
-  font-weight: bold;
+  font-size: 1rem;
   text-decoration: none;
-  color: black;
-  background-color: whitesmoke;
+  color: white;
+  background-color: #49444B;
   border-radius: 3px 3px 0 0;
 }
 
 .date {
   border-bottom: 1px solid #ddd;
   text-align: center;
-  padding: 1rem;
-  font-size: 1.1rem;
+  padding: 0.5rem;
+  font-size: 0.8rem;
 }
 
 .location {
   border-bottom: 1px solid #ddd;
   text-align: center;
-  padding: 1rem;
-  font-size: 1.1rem;
+  padding: 0.5rem;
+  font-size: 0.8rem;
 }
 
 .peopleList {
   border-bottom: 1px solid #ddd;
   display: flex;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   line-height: 1.4;
   align-items: center;
 }
@@ -55,7 +55,7 @@
 }
 
 .peopleList ul {
-  padding: 1rem;
+  padding: 0.5rem;
   list-style: none;
   width: 100%;
 }
@@ -74,22 +74,20 @@
 }
 
 .buttons {
+  padding: 0.5rem;
+  border-bottom: 1px solid #ddd;
+  font-size: 0.8rem;
+  font-weight: 500;
   display: flex;
-  padding: 1rem;
   justify-content: space-around;
 }
 
-.button {
-  composes: button from '../shared.css';
-  width: 9em;
+.button input {
+  margin-right: 0.25rem;
 }
 
-.green {
-  background-color: rgba(61,227,50,0.4);
-}
-
-.red {
-  background-color: rgba(248,26,10,0.35);
+.button input:disabled ~ span {
+  color: grey;
 }
 
 .openEdit {
@@ -102,25 +100,22 @@
   padding: 0.5em 0.5em 1.5em 1.5em;
 }
 
-.openEdit img {
+.openEdit div {
   height: 1em;
-  opacity: 0.3;
-}
-
-.openEdit:hover img {
+  width: 1em;
   opacity: 1;
 }
 
 .tagList {
-  border-bottom: 1px solid #ddd;
   font-size: 0.8rem;
   line-height: 1.4;
 }
 
 .tagList ul {
-  padding: 1rem;
+  padding: 0rem;
   list-style: none;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
 }
@@ -128,9 +123,79 @@
 .tag {
   text-align: center;
   display: inline-block;
-  margin: 0 0.5em 0.5em 0;
-  padding: 0.3em 0.5em;
-  background-color: whitesmoke;
+  margin: 0;
+  padding: 0.5em 0.5em;
   border: 1px solid #ddd;
-  border-radius: 5px;
+  border-top: 0;
+  border-right: 0;
+  font-size: 0.7rem;
+}
+
+.tag:last-child {
+  border-right: 1px solid #ddd;
+}
+
+.counts {
+  padding: 0.5rem;
+  border-bottom: 1px solid #ddd;
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-around;
+}
+
+.goingCount,
+.interestedCount,
+.badgerCount {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.goingCount svg,
+.interestedCount svg,
+.badgerCount svg {
+  width: 17px;
+  fill: red;
+}
+
+.goingCount svg {
+  fill: #F75F88;
+}
+
+.interestedCount svg {
+  fill: #FFE5C7;
+}
+
+.badgerCount svg {
+  fill: #000000;
+}
+
+.goingCount span:first-child,
+.interestedCount span:first-child,
+.badgerCount span:first-child {
+  height: 1.2rem;
+}
+
+.goingCount span:last-child,
+.interestedCount span:last-child,
+.badgerCount span:last-child {
+  background-color: #F75F88;
+  color: white;
+  height: 1.25rem;
+  width: 1.25rem;
+  line-height: 1.25rem;
+  border-radius: 50%;
+  margin-left: 0.25rem;
+  text-align: center;
+}
+
+.interestedCount span:last-child {
+  background-color: #FFE5C7;
+  color: #49444B;
+}
+
+.badgerCount span:last-child {
+  background-color: black;
+  color: white;
 }

@@ -1,72 +1,72 @@
 import assign from 'lodash/object/assign';
 import filter from 'lodash/collection/filter';
 import zipObject from 'lodash/array/zipObject';
-import {
-  RECEIVE_CONF,
-  UPDATE_CONF,
-  REMOVE_CONF,
-  EDITING_CONF,
-  VIEWING_CONF,
-  FILTER_BY_TAG,
-  REMOVE_TAG_FILTER
-} from './actions';
+
+import * as types from './actions/types';
 
 export function conference(state = {}, action) {
-  let key;
   switch (action.type) {
-    case RECEIVE_CONF:
+    case types.RECEIVE_CONF:
       return { [action.confKey]: action.conf };
-    case UPDATE_CONF:
-      return { [action.confKey]: assign({}, state, {
-        name: action.conf.name,
-        tags: action.conf.tags,
-        location: action.conf.location,
-        website: action.conf.website,
-        dateFrom: action.conf.dateFrom,
-        dateTo: action.conf.dateTo,
-        peopleGoing: action.conf.peopleGoing,
-        peopleInterested: action.conf.peopleInterested
-      }) };
-    case REMOVE_CONF:
+    case types.UPDATE_CONF:
+      return { [action.confKey]: assign({}, state, { ...action.conf }) };
+    case types.REMOVE_CONF:
     default:
       return state;
   }
 }
 
 export function conferences(state = {}, action) {
+  let keys, values;
+
   switch (action.type) {
-    case RECEIVE_CONF:
+    case types.RECEIVE_CONF:
       return assign({}, state, conference(void 0, action));
-    case UPDATE_CONF:
+    case types.UPDATE_CONF:
       return assign({}, state, conference(state[action.confKey], action));
-    case REMOVE_CONF:
-      const keys = Object.keys(state).filter(key => key !== action.confKey);
-      const values = keys.map(key => state[key]);
+    case types.REMOVE_CONF:
+      keys = Object.keys(state).filter(key => key !== action.confKey);
+      values = keys.map(key => state[key]);
       return zipObject(keys, values);
     default:
       return state;
   }
 }
 
-export function user(state = {}, action) {
+export function user(state = {}) {
   return state;
 }
 
 export function view(state = {}, action) {
+  let adding;
+
   switch (action.type) {
-    case EDITING_CONF:
-      const adding = !action.confKey;
+    case "@@router/LOCATION_CHANGE":
+      if (action.payload.pathname === "/new") {
+        return assign({}, state, { editing: null, adding: true });
+      }
+      return state;
+    case types.EDITING_CONF:
+      adding = !action.confKey;
       return assign({}, state, { editing: action.confKey, adding: adding });
-    case VIEWING_CONF:
+    case types.VIEWING_CONF:
       return assign({}, state, { editing: null, adding: false });
-    case FILTER_BY_TAG:
+    case types.FILTER_BY_TAG:
       return assign({}, state, {
         filters: (state.filters || []).concat([action.tagname])
       });
-    case REMOVE_TAG_FILTER:
+    case types.REMOVE_TAG_FILTER:
       return assign({}, state, {
         filters: filter((state.filters || []), f => f !== action.tagname)
       });
+    case types.SHOW_FILTERS:
+      return assign({}, state, { showFilters: true });
+    case types.HIDE_FILTERS:
+      return assign({}, state, { showFilters: false });
+    case types.SHOW_DETAILS:
+      return assign({}, state, { showDetails: true });
+    case types.HIDE_DETAILS:
+      return assign({}, state, { showDetails: false });
     default:
       return state;
   }

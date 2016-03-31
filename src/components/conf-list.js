@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import map from 'lodash/collection/map';
 import Conf from './conf';
 import s from './conf-list.css';
@@ -11,6 +11,11 @@ const ConfList = ({ conferences, fbRef }) => {
       )}
     </ul>
   );
+}
+
+ConfList.propTypes = {
+  conferences: PropTypes.object,
+  fbRef: PropTypes.object
 }
 
 export default ConfList;

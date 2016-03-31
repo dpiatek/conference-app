@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import s from './login-form.css';
 
 export default class LoginForm extends Component {
@@ -49,4 +49,8 @@ export default class LoginForm extends Component {
       </div>
     );
   }
+}
+
+LoginForm.propTypes = {
+  fbRef: PropTypes.object
 }

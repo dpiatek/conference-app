@@ -1,23 +1,26 @@
-import { conferences, user, view } from './reducers';
-import { createStore as _createStore, combineReducers, applyMiddleware } from 'redux';
-import DevTools from './dev-tools';
-import App from './components/app';
-import LoginForm from './components/login-form';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import { render } from 'react-dom';
+import { Router, Route, browserHistory } from 'react-router';
+import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
 import React from 'react';
 import thunk from 'redux-thunk';
 import Firebase from 'firebase';
 import Fireproof from 'fireproof';
+
+import { conferences, user, view } from './reducers';
+import App from './components/app';
+import Form from './components/form';
+import LoginForm from './components/login-form';
+
 import s from './index.css';
 
-const createStore = DevTools.instrument()(_createStore);
-const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
+const createStoreWithMiddleware = compose(
+  applyMiddleware(thunk, routerMiddleware(browserHistory)),
+  window.devToolsExtension ? window.devToolsExtension() : f => f)(createStore);
 
-const apiUrl = "https://blistering-fire-6946.firebaseio.com/";
+const apiUrl = process.env.FIREBASE_URL;
 const ref = new Fireproof(new Firebase(apiUrl));
-const auth = ref.getAuth();
-
 const appRoot = document.getElementById('app');
 
 function renderApp() {
@@ -28,35 +31,33 @@ function renderApp() {
       const auth = ref.getAuth();
 
       const userData = auth.provider === "google" ? {
-        name:  auth.google.displayName,
+        name: auth.google.displayName,
         profileImage: auth.google.profileImageURL
       } : data.users[auth.uid];
 
       let store = createStoreWithMiddleware(
-        combineReducers({ conferences, user, view }),
+        combineReducers({ conferences, user, view, routing: routerReducer }),
         { conferences: data.conferences, user: userData }
       );
 
-      if (process.env.NODE_ENV === 'production') {
-        render(
-          <Provider store={store}>
-            <App fbRef={ref} />
-          </Provider>,
-          appRoot
-        )
-      } else {
-        render(
-          <Provider store={store}>
-            <div>
-              <App fbRef={ref} />
-              <DevTools />
-            </div>
-          </Provider>,
-          appRoot
-        )
-      }
+      const history = syncHistoryWithStore(browserHistory, store);
+      const wrappedApp = () => <App fbRef={ref} />
+      const wrappedForm = () => <Form fbRef={ref} />
+
+      render(
+        <Provider store={store}>
+          <Router history={history}>
+            <Route path="/" component={wrappedApp} />
+            <Route path="new" component={wrappedForm} />
+            <Route path="edit" component={wrappedForm} />
+          </Router>
+        </Provider>,
+        appRoot
+      )
     })
-    .catch(() => renderLogin());
+    .catch(err => {
+      renderLogin();
+    })
 }
 
 function renderLogin() {

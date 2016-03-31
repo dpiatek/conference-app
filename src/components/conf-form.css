@@ -1,15 +1,8 @@
 .form {
-  background-color: whitesmoke;
   padding: 1rem;
-  width: 33%;
-  height: 100%;
-  max-width: 14rem;
-  border-right: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-  position: absolute;
-  z-index: 1;
-  transform: translateX(-100%);
-  transition: transform 0.2s ease-in-out;
+  margin: 1rem;
+  background-color: #FFFFE9;
+  border-radius: 0.5rem;
 }
 
 .legend {
@@ -52,4 +45,5 @@
 
 .button {
   composes: button from '../shared.css';
+  font-size: 0.9rem;
 }

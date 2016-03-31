@@ -1,10 +1,11 @@
 .button {
-  border: 1px solid #ddd;
+  border: 1px solid #49444B;
   padding: 0.7em;
   font-size: 0.8rem;
+  font-family: 'PT Sans Narrow', sans-serif;
   cursor: pointer;
   border-radius: 0.25em;
-  background-color: ghostwhite;
+  background-color: #FFE5C7;
 }
 
 .button:focus,

@@ -10,7 +10,8 @@ export const formFilters = [
   "Development",
   "UX",
   "Project managment",
-  "Business"
+  "Business",
+  "Design"
 ];
 
 export const filterList = userFilters.concat(formFilters);

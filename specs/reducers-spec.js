@@ -1,11 +1,11 @@
 import expect from 'expect';
 import deepFreeze from 'deep-freeze';
-import { conference, conferences, user } from '../src/reducers';
+import { conference, conferences } from '../src/reducers';
 import {
   RECEIVE_CONF,
   UPDATE_CONF,
   REMOVE_CONF
-} from '../src/actions';
+} from '../src/actions/types';
 
 describe('conference reducer', function () {
   it('new conference', function () {
@@ -46,16 +46,7 @@ describe('conference reducer', function () {
     deepFreeze(state);
 
     expect(conference(state, action))
-      .toEqual({ "key": {
-        name: "B",
-        tags: undefined,
-        website: undefined,
-        location: undefined,
-        dateFrom: undefined,
-        dateTo: undefined,
-        peopleGoing: undefined,
-        peopleInterested: undefined
-      }});
+      .toEqual({ "key": { name: "B" }});
   });
 });
 
