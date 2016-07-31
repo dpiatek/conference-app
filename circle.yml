@@ -3,7 +3,7 @@ machine:
     version: 5.3.0
 deployment:
   production:
-    branch: master
+    tag: /v[0-9]+(\.[0-9]+)*(-hotfix)*/
     commands:
       - npm run build
       - npm install -g firebase-tools
