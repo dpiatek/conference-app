@@ -1,19 +1,14 @@
 import expect from 'expect';
-import User from '../src/components/user';
 import { UserConfList, userConfListSelector } from '../src/components/user-conf-list';
 import { Conf, confSelector } from '../src/components/conf';
-import ConfList from '../src/components/conf-list';
 import ConfForm from '../src/components/conf-form';
 import ReactDOMServer from 'react-dom/server';
-import ReactDOM, { findDOMNode as findNode } from 'react-dom';
+import { findDOMNode as findNode } from 'react-dom';
 import React from 'react';
-import { createStore } from 'redux';
 import TestUtils, { renderIntoDocument, scryRenderedDOMComponentsWithTag as scryTag } from 'react-addons-test-utils';
-import { GO_TO_CONF, INTERESTED_IN_CONF } from '../src/actions';
 
 describe('UserConfList', function() {
   it('renders correctly', function() {
-    const confs = [{ id: 0, name: "BestConf" }];
     const string = ReactDOMServer.renderToString(
       <UserConfList confKeys={["key"]} conferences={{"key": { name: "BestConf" }}} />
     );
@@ -50,13 +45,9 @@ describe('Conf', function() {
     peopleInterested: []
   });
 
-  let view = Object.freeze({
-    showDetails: true
-  });
-
   it('renders correctly', function() {
     const string = ReactDOMServer.renderToString(
-      <Conf conf={conf} view={view} view={view} />
+      <Conf conf={conf} />
     );
     expect(string)
       .toInclude("BestConf")
@@ -69,7 +60,7 @@ describe('Conf', function() {
 
   it('renders correctly attendance', function() {
     const string = ReactDOMServer.renderToString(
-      <Conf conf={conf} view={view} attending={true} />
+      <Conf conf={conf} attending={true} />
     );
     expect(string).toInclude("Going");
     expect(string).toInclude("Jake");
@@ -89,7 +80,7 @@ describe('Conf', function() {
     });
 
     const string = ReactDOMServer.renderToString(
-      <Conf conf={conf} view={view} interested={true} />
+      <Conf conf={conf} interested={true} />
     );
     expect(string).toInclude("Maybe");
     expect(string).toInclude("Jake");
@@ -117,8 +108,7 @@ describe('Conf', function() {
       attending: false,
       interested: true,
       confKey: "key",
-      fbRef: {},
-      view: {}
+      fbRef: {}
     });
   });
 });

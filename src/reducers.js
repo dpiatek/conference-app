@@ -63,10 +63,6 @@ export function view(state = {}, action) {
       return assign({}, state, { showFilters: true });
     case types.HIDE_FILTERS:
       return assign({}, state, { showFilters: false });
-    case types.SHOW_DETAILS:
-      return assign({}, state, { showDetails: true });
-    case types.HIDE_DETAILS:
-      return assign({}, state, { showDetails: false });
     default:
       return state;
   }

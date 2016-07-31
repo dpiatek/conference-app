@@ -67,7 +67,7 @@ const CalendarView = ({ conferences, fbRef, filters, userName }) => {
     <div className={s.container}>
       {map(confsByYears, (confsByMonths, year) =>
         <div className={s.yearContainer} key={year}>
-          {Object.keys(confsByYears).length > 1 && <p>{year}</p>}
+          {Object.keys(confsByYears).length > 1 && <p className={s.year}>{year}</p>}
           {map(confsByMonths, (confs, month) =>
             <div key={month} className={s.monthContainer}>
               <p className={s.monthName}>{months[month]} {`(${Object.keys(confs).length})`}</p>

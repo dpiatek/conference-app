@@ -191,7 +191,7 @@ export class Conf extends Component {
       dateTo, peopleGoing, peopleInterested, badgerSpeakers
     } = this.props.conf;
 
-    const { attending, interested, view } = this.props;
+    const { attending, interested } = this.props;
     const speakers = this.getSpeakers(badgerSpeakers);
 
     const handleEdit = this.handleEdit.bind(this);
@@ -222,7 +222,7 @@ export class Conf extends Component {
         </div>
 
         {location && this.renderLocation(location)}
-        {view.showDetails ? this.renderDetails(peopleGoing, peopleInterested, speakers, tags) : null}
+        {this.renderDetails(peopleGoing, peopleInterested, speakers, tags)}
       </li>
     );
   }
@@ -235,8 +235,7 @@ Conf.propTypes = {
   dispatch: PropTypes.func,
   conf: PropTypes.object,
   attending: PropTypes.bool,
-  interested: PropTypes.bool,
-  view: PropTypes.object
+  interested: PropTypes.bool
 }
 
 export function confSelector(state, props, dispatch) {
@@ -244,7 +243,7 @@ export function confSelector(state, props, dispatch) {
   const { conf, confKey, fbRef } = props;
   const attending = includes(props.conf.peopleGoing, username);
   const interested = includes(props.conf.peopleInterested, username);
-  return { username, attending, interested, conf, dispatch, confKey, fbRef, view: state.view };
+  return { username, attending, interested, conf, dispatch, confKey, fbRef };
 }
 
 export default connect(confSelector)(Conf);

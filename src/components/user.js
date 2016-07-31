@@ -1,18 +1,15 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
-import {connect} from 'react-redux';
-import { showFilters, hideFilters, showDetails, hideDetails } from '../actions';
+import { connect } from 'react-redux';
+import { showFilters, hideFilters } from '../actions';
 import s from './user.css';
 
 
-const User = ({ user, fbRef, view, pathname, showFilterBar, hideFilterBar, showConfDetails, hideConfDetails }) => {
+const User = ({ user, fbRef, view, pathname, showFilterBar, hideFilterBar }) => {
   const logout = () => fbRef.unauth();
   const isRoot = pathname === "/";
   const filterCallback = view.showFilters ? hideFilterBar : showFilterBar;
   const filterButtonText = view.showFilters ? "Hide Filters" : "Show Filters";
-
-  const detailsCallback = view.showDetails ? hideConfDetails : showConfDetails;
-  const detailsButtonText = view.showDetails ? "Hide Details" : "Show Details";
 
   return (
     <header className={s.container}>
@@ -26,12 +23,6 @@ const User = ({ user, fbRef, view, pathname, showFilterBar, hideFilterBar, showC
             {filterButtonText}
           </button> :
           null}
-
-          {isRoot ?
-            <button onClick={detailsCallback} className={s.menuButton}>
-              {detailsButtonText}
-            </button> :
-            null}
       </div>
 
       <div>
@@ -48,14 +39,10 @@ User.propTypes = {
   view: PropTypes.object,
   pathname: PropTypes.string,
   showFilterBar: PropTypes.func,
-  hideFilterBar: PropTypes.func,
-  showConfDetails: PropTypes.func,
-  hideConfDetails: PropTypes.func
+  hideFilterBar: PropTypes.func
 }
 
 export default connect(state => state, dispatch => ({
   showFilterBar: () => dispatch(showFilters()),
-  hideFilterBar: () => dispatch(hideFilters()),
-  showConfDetails: () => dispatch(showDetails()),
-  hideConfDetails: () => dispatch(hideDetails())
+  hideFilterBar: () => dispatch(hideFilters())
 }))(User);

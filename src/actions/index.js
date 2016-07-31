@@ -35,11 +35,3 @@ export function showFilters() {
 export function hideFilters() {
   return { type: types.HIDE_FILTERS };
 }
-
-export function showDetails() {
-  return { type: types.SHOW_DETAILS };
-}
-
-export function hideDetails() {
-  return { type: types.HIDE_DETAILS };
-}
