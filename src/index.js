@@ -64,7 +64,7 @@ function renderApp(auth) {
 function renderLogin() {
   render(
     <div className={s.login}>
-      <h1>Events App</h1>
+      <h1>Badger Conferences</h1>
       <LoginForm fbRef={ref} />
     </div>,
     appRoot);

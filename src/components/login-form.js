@@ -62,7 +62,7 @@ export default class LoginForm extends Component {
     const handleGuest = this.handleGuest.bind(this);
 
     return (
-      <div>
+      <div className={s.loginButtons}>
         <button className={s.button} onClick={handleGoogle}>Sign in with Google</button>
         <button className={s.button} onClick={handleGuest}>Sign in as Guest</button>
         {this.renderError()}

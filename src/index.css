@@ -10,11 +10,6 @@
   margin-top: 0;
 }
 
-.login > div {
-  display: flex;
-  flex-direction: column;
-}
-
 body {
   font-family: 'PT Sans Narrow', sans-serif;
   background-color: #FFE5C7;
