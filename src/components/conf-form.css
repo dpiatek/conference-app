@@ -3,12 +3,20 @@
   margin: 1rem;
   background-color: #FFFFE9;
   border-radius: 0.5rem;
+  min-width: 340px;
 }
 
 .legend {
   font-weight: bold;
   margin-bottom: 1em;
   padding: 0;
+}
+
+.formFields {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 16px;
+  min-width: 300px;
 }
 
 .field {
@@ -18,10 +26,14 @@
 
 .field span {
   display: block;
-  margin-bottom: 0.35rem;
 }
 
-.field input {
+.fieldInline {
+  display: inline-block;
+}
+
+.field input,
+.field textarea {
   display: block;
   width: 90%;
   padding: 0.3em;
@@ -55,4 +67,9 @@
   color: white;
   float: right;
   padding: 0.4em 0.8em;
+}
+
+.submitButton {
+  composes: button from '../shared.css';
+  display: block;
 }

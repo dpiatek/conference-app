@@ -5,9 +5,34 @@
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <link href='https://fonts.googleapis.com/css?family=PT+Sans+Narrow:700,400' rel='stylesheet' type='text/css'>
     <title>Conference app</title>
+    <style>
+      #map {
+        height: 100%;
+      }
+
+      #type-selector {
+        color: #fff;
+        background-color: #4d90fe;
+        padding: 5px 11px 0px 11px;
+      }
+
+      #type-selector label {
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: 300;
+      }
+
+      #target {
+        width: 345px;
+      }
+    </style>
   </head>
   <body>
     <div id="app"></div>
+    <script>
+      function noop(){}
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAy-LawuZSjBJpiLguckEH2GndArvK5uY&libraries=places&callback=noop" charset="utf-8"></script>
     <script src="main.js"></script>
   </body>
 </html>

@@ -1,0 +1,12 @@
+.previewMap {
+  width: 300px;
+  height: 300px;
+}
+
+.controls {
+  display: block;
+  width: 90%;
+  padding: 0.3em;
+  max-width: 14rem;
+  margin-bottom: 1rem;
+}

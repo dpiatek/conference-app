@@ -6,6 +6,7 @@ import includes from 'lodash/collection/includes';
 import assign from 'lodash/object/assign';
 import difference from 'lodash/array/difference';
 
+import PreviewMap from './preview-map';
 import ConfList from './conf-list';
 import s from './calendar-container.css';
 import { GOING_TO, INTERESTED_IN } from '../filter-list';
