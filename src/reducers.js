@@ -9,7 +9,7 @@ export function conference(state = {}, action) {
     case types.RECEIVE_CONF:
       return { [action.confKey]: action.conf };
     case types.UPDATE_CONF:
-      return { [action.confKey]: assign({}, state, { ...action.conf }) };
+      return { [action.confKey]: action.conf }; // we get a full update from FB
     case types.REMOVE_CONF:
     default:
       return state;
