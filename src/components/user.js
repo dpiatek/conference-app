@@ -10,13 +10,14 @@ const User = ({ user, fbRef, view, pathname, showFilterBar, hideFilterBar }) => 
   const isRoot = pathname === "/";
   const filterCallback = view.showFilters ? hideFilterBar : showFilterBar;
   const filterButtonText = view.showFilters ? "Hide Filters" : "Show Filters";
+  const isAnonymous = user.isAnonymous;
 
   return (
     <header className={s.container}>
       <div className={s.buttons}>
-        {isRoot ?
+        {isAnonymous ? null : (isRoot ?
           <Link to="/new">Add Event</Link> :
-          <Link to="/">Go back</Link>}
+          <Link to="/">Go back</Link>)}
 
         {isRoot ?
           <button onClick={filterCallback} className={s.menuButton}>

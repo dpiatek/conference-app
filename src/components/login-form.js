@@ -34,6 +34,24 @@ export default class LoginForm extends Component {
     }, { scope: "email" });
   }
 
+  handleGuest(e) {
+    e.preventDefault();
+    const ref = this.props.fbRef;
+
+    ref.authAnonymously((error, authData) => {
+      if (error) {
+        this.setState({ error: "Login Failed!" });
+      } else {
+        ref.child("users").child(authData.uid).set({
+          provider: authData.provider,
+          name: "Guest",
+          email: null,
+          profileImage: null
+        });
+      }
+    });
+  }
+
   renderError() {
     const error = this.state.error;
     return error && <p className={s.error}>{error}</p>;
@@ -41,10 +59,12 @@ export default class LoginForm extends Component {
 
   render() {
     const handleGoogle = this.handleGoogle.bind(this);
+    const handleGuest = this.handleGuest.bind(this);
 
     return (
-      <div>
+      <div className={s.loginButtons}>
         <button className={s.button} onClick={handleGoogle}>Sign in with Google</button>
+        <button className={s.button} onClick={handleGuest}>Sign in as Guest</button>
         {this.renderError()}
       </div>
     );
