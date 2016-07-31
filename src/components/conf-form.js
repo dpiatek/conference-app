@@ -7,6 +7,8 @@ import { addConf, editConf, deleteConf } from '../actions/async';
 import s from './conf-form.css';
 import { formFilters } from '../filter-list';
 
+import PreviewMap from "./preview-map";
+
 class ConfForm extends Component {
   constructor(props) {
     super();
@@ -47,6 +49,10 @@ class ConfForm extends Component {
   handleChange(e) {
     const key = e.target.id.match(/-(.+$)/)[1];
     this.setState({ [key]: e.target.value });
+  }
+
+  handleLocationChange(location) {
+    this.setState({ location });
   }
 
   handleCheckboxChange(checkBoxfilter, isEnabled) {
@@ -96,57 +102,62 @@ class ConfForm extends Component {
     const handleChange = this.handleChange.bind(this);
     const handleSubmit = this.handleSubmit.bind(this);
     const handleDelete = this.handleDelete.bind(this);
+    const handleLocationChange = this.handleLocationChange.bind(this);
 
     return (
       <form className={s.form} onSubmit={handleSubmit} ref="confForm">
         {this.props.editConfKey ? <button type="button" className={s.deleteButton} onClick={handleDelete}>Delete event</button> : null}
         <legend className={s.legend}>{addConf ? "Add event" : "Edit event"}</legend>
-        <label className={s.field}>Name
-          <input value={name} type="text" id="conf-name" required onChange={handleChange} />
+
+        <div className={s.formFields}>
+          <label className={s.field}>Name
+            <input value={name} type="text" id="conf-name" required onChange={handleChange} />
+          </label>
+
+          <label className={s.field}>Website
+            <input value={website} type="text" id="conf-website" required onChange={handleChange} />
+          </label>
+
+          <fieldset className={s.tags}>
+            <legend>Tags</legend>
+            {formFilters.map((filter, index) => {
+              const isEnabled = any(tags, f => f === filter);
+              const id = `conf-filter-${index}`;
+
+              return (
+                <label key={filter}>
+                  <input
+                    name={id}
+                    value={isEnabled}
+                    checked={isEnabled}
+                    type="checkbox"
+                    onChange={this.handleCheckboxChange.bind(this, filter, isEnabled)} /> {filter}
+                </label>
+              );
+            })}
+          </fieldset>
+
+          <label className={s.field}>Date From
+            <input value={dateFrom} type="date" id="conf-dateFrom" required onChange={handleChange} />
+          </label>
+
+          <label className={s.field}>Date To
+            <input value={dateTo} type="date" id="conf-dateTo" required onChange={handleChange} />
+          </label>
+
+          <label className={s.field}>Badger Speakers
+            <span>(can be a comma separated list)</span>
+            <textarea value={badgerSpeakers} id="conf-badgerSpeakers" onChange={handleChange} />
+          </label>
+        </div>
+
+        <label className={s.fieldInline}>Location
+          <PreviewMap location={location || {}} callback={handleLocationChange} />
         </label>
 
-        <label className={s.field}>Website
-          <input value={website} type="text" id="conf-website" required onChange={handleChange} />
-        </label>
-
-        <label className={s.field}>Location
-          <input value={location} type="text" id="conf-location" required onChange={handleChange} />
-        </label>
-
-        <fieldset className={s.tags}>
-          <legend>Tags</legend>
-          {formFilters.map((filter, index) => {
-            const isEnabled = any(tags, f => f === filter);
-            const id = `conf-filter-${index}`;
-
-            return (
-              <label key={filter}>
-                <input
-                  name={id}
-                  value={isEnabled}
-                  checked={isEnabled}
-                  type="checkbox"
-                  onChange={this.handleCheckboxChange.bind(this, filter, isEnabled)} /> {filter}
-              </label>
-            );
-          })}
-        </fieldset>
-
-        <label className={s.field}>Date From
-          <input value={dateFrom} type="date" id="conf-dateFrom" required onChange={handleChange} />
-        </label>
-
-        <label className={s.field}>Date To
-          <input value={dateTo} type="date" id="conf-dateTo" required onChange={handleChange} />
-        </label>
-
-        <label className={s.field}>Badger Speakers
-          <textarea value={badgerSpeakers} id="conf-badgerSpeakers" onChange={handleChange} />
-        </label>
-
-        <button className={s.button}>Submit</button>
+        <button className={s.submitButton}>Submit</button>
       </form>
-    );
+    );i
   }
 }
 

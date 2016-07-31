@@ -111,10 +111,10 @@ export class Conf extends Component {
   }
 
   renderLocation(location) {
+    const locationName = typeof location === "string" ? location : location.name;
+
     return (
-      <div className={s.location}>
-        {location}
-      </div>
+      <div className={s.location}>{locationName}</div>
     );
   }
 

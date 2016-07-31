@@ -115,6 +115,21 @@ describe('Conf', function() {
 });
 
 describe('ConfForm', function () {
+  before(() => {
+    global.google = {
+      maps: {
+        Map: function() {
+          this.addListener = () => {};
+        },
+        places: {
+          SearchBox: function() {
+            this.addListener = () => {};
+          }
+        }
+      }
+    }
+  });
+
   it('handles changes on a field', function () {
     const props = { setFormWidthCallback: function(){} };
     const instance = renderIntoDocument(<ConfForm { ...props } />);
@@ -152,5 +167,9 @@ describe('ConfForm', function () {
     const form = findNode(instance);
     TestUtils.Simulate.submit(form);
     expect(spy).toHaveBeenCalled();
+  });
+
+  after(() => {
+    global.google = null;
   });
 });
