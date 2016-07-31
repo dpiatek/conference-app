@@ -47,3 +47,12 @@
   composes: button from '../shared.css';
   font-size: 0.9rem;
 }
+
+.deleteButton {
+  composes: button from '../shared.css';
+  font-size: 0.9rem;
+  background-color: #d84646;
+  color: white;
+  float: right;
+  padding: 0.4em 0.8em;
+}

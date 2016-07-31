@@ -3,7 +3,7 @@ import {push} from 'react-router-redux';
 import any from 'lodash/collection/any';
 import filter from 'lodash/collection/filter';
 import isEqual from 'lodash/lang/isEqual';
-import { addConf, editConf } from '../actions/async';
+import { addConf, editConf, deleteConf } from '../actions/async';
 import s from './conf-form.css';
 import { formFilters } from '../filter-list';
 
@@ -84,14 +84,22 @@ class ConfForm extends Component {
     this.props.dispatch(push('/'));
   }
 
+  handleDelete() {
+    const { fbRef, editConfKey } = this.props;
+    this.props.dispatch(deleteConf(fbRef, editConfKey));
+    this.props.dispatch(push('/'));
+  }
+
   render() {
     const { name, tags, location, website, dateFrom, dateTo, badgerSpeakers } = this.state;
     const { addConf } = this.props;
     const handleChange = this.handleChange.bind(this);
     const handleSubmit = this.handleSubmit.bind(this);
+    const handleDelete = this.handleDelete.bind(this);
 
     return (
       <form className={s.form} onSubmit={handleSubmit} ref="confForm">
+        {this.props.editConfKey ? <button type="button" className={s.deleteButton} onClick={handleDelete}>Delete event</button> : null}
         <legend className={s.legend}>{addConf ? "Add event" : "Edit event"}</legend>
         <label className={s.field}>Name
           <input value={name} type="text" id="conf-name" required onChange={handleChange} />
