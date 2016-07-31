@@ -6,7 +6,6 @@ import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-rou
 import React from 'react';
 import thunk from 'redux-thunk';
 import Firebase from 'firebase';
-import Fireproof from 'fireproof';
 
 import { conferences, user, view } from './reducers';
 import App from './components/app';
@@ -20,28 +19,30 @@ const createStoreWithMiddleware = compose(
   window.devToolsExtension ? window.devToolsExtension() : f => f)(createStore);
 
 const apiUrl = process.env.FIREBASE_URL;
-const ref = new Fireproof(new Firebase(apiUrl));
+const ref = new Firebase(apiUrl);
 const appRoot = document.getElementById('app');
 
-function renderApp() {
+function renderApp(auth) {
+  const isAnonymous = auth.provider === "anonymous";
+
   ref
+    .child(isAnonymous ? 'conferences_public' : 'conferences')
     .once('value')
     .then(snapshot => {
       const data = snapshot.val();
-      const auth = ref.getAuth();
 
       const userData = auth.provider === "google" ? {
         name: auth.google.displayName,
         profileImage: auth.google.profileImageURL
-      } : data.users[auth.uid];
+      } : { name: "Guest", isAnonymous: true };
 
       let store = createStoreWithMiddleware(
         combineReducers({ conferences, user, view, routing: routerReducer }),
-        { conferences: data.conferences, user: userData }
+        { conferences: data, user: userData }
       );
 
       const history = syncHistoryWithStore(browserHistory, store);
-      const wrappedApp = () => <App fbRef={ref} />
+      const wrappedApp = () => <App fbRef={ref} isAnonymous={isAnonymous} />
       const wrappedForm = () => <Form fbRef={ref} />
 
       render(
@@ -69,4 +70,4 @@ function renderLogin() {
     appRoot);
 }
 
-ref.onAuth(auth => auth ? renderApp() : renderLogin());
+ref.onAuth(auth => auth ? renderApp(auth) : renderLogin());

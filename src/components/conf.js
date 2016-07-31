@@ -176,12 +176,11 @@ export class Conf extends Component {
     }
   }
 
-  renderDetails(peopleGoing, peopleInterested, speakers, tags) {
+  renderDetails(peopleGoing, peopleInterested, speakers) {
     return [
       this.renderPeopleList("Going", peopleGoing),
       this.renderPeopleList("Maybe", peopleInterested),
-      this.renderBadgerSpeakers("Speakers", speakers),
-      this.renderTagList("Tags", tags)
+      this.renderBadgerSpeakers("Speakers", speakers)
     ];
   }
 
@@ -191,16 +190,16 @@ export class Conf extends Component {
       dateTo, peopleGoing, peopleInterested, badgerSpeakers
     } = this.props.conf;
 
-    const { attending, interested } = this.props;
+    const { attending, interested, isAnonymous } = this.props;
     const speakers = this.getSpeakers(badgerSpeakers);
 
     const handleEdit = this.handleEdit.bind(this);
 
     return (
       <li className={s.container}>
-        <button className={s.openEdit} onClick={handleEdit}>
+        {isAnonymous ? null : <button className={s.openEdit} onClick={handleEdit}>
           <div dangerouslySetInnerHTML={{__html: widget}}></div>
-        </button>
+        </button>}
 
         <a className={s.name} href={website} target="_blank">
           {name}
@@ -212,17 +211,18 @@ export class Conf extends Component {
           {this.renderBadgerSpeakersCount(speakers)}
         </div> : null}
 
-        <div className={s.buttons}>
+        {isAnonymous ? null : <div className={s.buttons}>
           {this.renderAttendance(attending)}
           {this.renderInterest(attending, interested)}
-        </div>
+        </div>}
 
         <div className={s.date}>
           {formatDuration(formatDate(dateFrom), formatDate(dateTo))}
         </div>
 
         {location && this.renderLocation(location)}
-        {this.renderDetails(peopleGoing, peopleInterested, speakers, tags)}
+        {isAnonymous ? null : this.renderDetails(peopleGoing, peopleInterested, speakers)}
+        {this.renderTagList("Tags", tags)}
       </li>
     );
   }
@@ -235,15 +235,17 @@ Conf.propTypes = {
   dispatch: PropTypes.func,
   conf: PropTypes.object,
   attending: PropTypes.bool,
-  interested: PropTypes.bool
+  interested: PropTypes.bool,
+  isAnonymous: PropTypes.bool
 }
 
 export function confSelector(state, props, dispatch) {
+  const isAnonymous = state.user.isAnonymous;
   const username = state.user.name;
   const { conf, confKey, fbRef } = props;
   const attending = includes(props.conf.peopleGoing, username);
   const interested = includes(props.conf.peopleInterested, username);
-  return { username, attending, interested, conf, dispatch, confKey, fbRef };
+  return { username, attending, interested, conf, dispatch, confKey, fbRef, isAnonymous };
 }
 
 export default connect(confSelector)(Conf);

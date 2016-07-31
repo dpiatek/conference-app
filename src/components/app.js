@@ -8,8 +8,8 @@ import appStyles from './app.css';
 
 class App extends Component {
   componentDidMount() {
-    const { fbRef, conferences } = this.props;
-    const ref = fbRef.child('conferences');
+    const { fbRef, conferences, isAnonymous } = this.props;
+    const ref = fbRef.child(isAnonymous ? 'conferences_public' : 'conferences');
 
     ref.on('child_added', snapshot => {
       if (!snapshot || conferences[snapshot.key()]) return;
@@ -61,7 +61,8 @@ App.propTypes = {
   removeConf: PropTypes.func,
   updateConf: PropTypes.func,
   routing: PropTypes.object,
-  view: PropTypes.object
+  view: PropTypes.object,
+  isAnonymous: PropTypes.bool
 };
 
 const mapState = state => state;

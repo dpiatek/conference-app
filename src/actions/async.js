@@ -4,26 +4,45 @@ import filter from 'lodash/collection/filter';
 
 import { viewingConf } from './index.js';
 
-export function addConf(ref, conf) {
-  return () => ref.child("conferences").push(conf);
+function publicKeysOnly(conf) {
+  return {
+    name: conf.name || null,
+    tags: conf.tags || null,
+    website: conf.website || null,
+    location: conf.location || null,
+    dateFrom: conf.dateFrom || null,
+    dateTo: conf.dateTo || null,
+    peopleGoing: (conf.peopleGoing || []).map(() => "X"),
+    peopleInterested: (conf.peopleInterested || []).map(() => "X")
+  }
 }
 
-export function editConf(ref, newConf, confKey) {
+export function addConf(ref, conf) {
+  return () => {
+    ref.child("conferences").push(conf);
+    ref.child("conferences_public").push(conf);
+  };
+}
+
+export function editConf(ref, newConf, confKey, fbChild = "conferences") {
   return dispatch => {
     ref
-      .child("conferences")
+      .child(fbChild)
       .child(confKey)
       .transaction(oldConf => {
         oldConf = oldConf || {};
         return assign({}, oldConf, newConf);
       })
-      .then(() => dispatch(viewingConf()))
-      .catch(error => console.error(error));
+      .then(() => fbChild === "conferences" ? dispatch(viewingConf()) : null)
+      .then(() => dispatch(editConf(ref, publicKeysOnly(newConf), confKey, "conferences_public")));
   };
 }
 
 export function deleteConf(ref, confKey) {
-  return () => ref.child("conferences").child(confKey).remove();
+  return () => {
+    ref.child("conferences").child(confKey).remove();
+    ref.child("conferences_public").child(confKey).remove();
+  };
 }
 
 export function goToConf(ref, currentUser, confKey) {
@@ -33,11 +52,19 @@ export function goToConf(ref, currentUser, confKey) {
       .child(confKey)
       .transaction(conf => {
         conf = conf || {};
-        return assign({}, conf, {
+
+        const newData = assign({}, conf, {
           peopleGoing: (conf.peopleGoing || []).concat([currentUser]),
           peopleInterested: filter((conf.peopleInterested || []), user => user !== currentUser)
         });
-      })
+
+        ref
+          .child("conferences_public")
+          .child(confKey)
+          .transaction(() => publicKeysOnly(newData));
+
+        return newData;
+      });
   };
 }
 
@@ -48,9 +75,16 @@ export function cancelGoToConf(ref, currentUser, confKey) {
       .child(confKey)
       .transaction(conf => {
         conf = conf || {};
-        return assign({}, conf, {
+        const newData = assign({}, conf, {
           peopleGoing: filter((conf.peopleGoing || []), user => user !== currentUser)
         });
+
+        ref
+          .child("conferences_public")
+          .child(confKey)
+          .transaction(() => publicKeysOnly(newData));
+
+        return newData;
       })
   };
 }
@@ -62,9 +96,16 @@ export function interestedInConf(ref, currentUser, confKey) {
       .child(confKey)
       .transaction(conf => {
         conf = conf || {};
-        return assign({}, conf, {
+        const newData = assign({}, conf, {
           peopleInterested: (conf.peopleInterested || []).concat([currentUser])
         });
+
+        ref
+          .child("conferences_public")
+          .child(confKey)
+          .transaction(() => publicKeysOnly(newData));
+
+        return newData;
       })
   };
 }
@@ -76,9 +117,16 @@ export function cancelInterestedInConf(ref, currentUser, confKey) {
       .child(confKey)
       .transaction(conf => {
         conf = conf || {};
-        return assign({}, conf, {
+        const newData = assign({}, conf, {
           peopleInterested: filter((conf.peopleInterested || []), user => user !== currentUser)
         });
+
+        ref
+          .child("conferences_public")
+          .child(confKey)
+          .transaction(() => publicKeysOnly(newData));
+
+        return newData;
       })
   };
 }

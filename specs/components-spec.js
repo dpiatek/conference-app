@@ -89,7 +89,7 @@ describe('Conf', function() {
   it('transforms props correctly', function () {
     const dispatch = function(){};
     const state = {
-      user: { name: "Jake" },
+      user: { name: "Jake", isAnonymous: false },
       view: {}
     };
     const props = {
@@ -108,7 +108,8 @@ describe('Conf', function() {
       attending: false,
       interested: true,
       confKey: "key",
-      fbRef: {}
+      fbRef: {},
+      isAnonymous: false
     });
   });
 });
