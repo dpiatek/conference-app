@@ -1,9 +1,11 @@
 .button {
-  padding: 0.7em;
+  padding: 0.6em 1.5em 0.6em 1.5em;
   font-size: 0.8rem;
-  ont-family: 'Open Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   cursor: pointer;
   background-color: #FC1D42;
+  color: #f8f8f8;
+  border: none;
 }
 
 .button:focus,

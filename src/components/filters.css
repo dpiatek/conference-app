@@ -20,10 +20,6 @@
 
 .filter {
   composes: button from '../shared.css';
-  font-size: 0.8rem;
-  border: 0;
-  font-family: 'PT Sans Narrow', sans-serif;
-  font-weight: 700;
 }
 
 .filterActive {
