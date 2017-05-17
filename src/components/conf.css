@@ -176,7 +176,7 @@
 .goingCount span:first-child,
 .interestedCount span:first-child,
 .badgerCount span:first-child {
-  height: 1.2rem;
+  height: 1.5rem;
 }
 
 .goingCount span:last-child,
@@ -189,7 +189,7 @@
   width: 1.5rem;
   line-height: 1.5rem;
   border-radius: 50%;
-  margin-left: 1rem;
+  margin-left: 0.5rem;
   text-align: center;
 }
 
