@@ -1,17 +1,15 @@
 .button {
-  border: 1px solid #49444B;
   padding: 0.7em;
   font-size: 0.8rem;
-  font-family: 'PT Sans Narrow', sans-serif;
+  ont-family: 'Open Sans', sans-serif;
   cursor: pointer;
-  border-radius: 0.25em;
-  background-color: #FFE5C7;
+  background-color: #FC1D42;
 }
 
 .button:focus,
 .button:active {
   outline: 0;
-  border: 1px solid #888;
+  background-color: #606060;
 }
 
 .button:disabled {
